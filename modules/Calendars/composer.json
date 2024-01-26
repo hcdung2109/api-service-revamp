@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/calendars",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Digisource\\Calendars\\": "",
+            "Digisource\\Calendars\\App\\": "app/",
+            "Digisource\\Calendars\\Database\\Factories\\": "database/factories/",
+            "Digisource\\Calendars\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digisource\\Calendars\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Settings",
+    "alias": "settings",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Digisource\\Settings\\Providers\\SettingsServiceProvider"
+    ],
+    "files": []
+}

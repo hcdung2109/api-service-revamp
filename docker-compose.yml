@@ -1,0 +1,60 @@
+version: '3.5'
+networks:
+    digisource:
+        name: digisource-stack
+services:
+    api-service:
+        container_name: api-service
+        networks:
+            - digisource
+        depends_on:
+            - postgres
+        build:
+            context: .
+            dockerfile: ./.docker/docker/8.2/Dockerfile
+        ports:
+            - "8081:80"
+        volumes:
+            - .:/var/www/html
+
+    postgres:
+        container_name: postgres_container
+        image: postgres:14.2
+        environment:
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "changeme"
+            PGDATA: /data/postgres
+        volumes:
+            - .docker/data/postgres:/data/postgres
+        ports:
+            - "5433:5432"
+        networks:
+            - digisource
+        restart: unless-stopped
+    redis:
+        image: redis:6.2-alpine
+        restart: always
+        networks:
+            - digisource
+        ports:
+            - '6379:6379'
+#        command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+        volumes:
+            - .docker/data/redis:/data
+    pgadmin-rv:
+        container_name: pgadmin_container_rv
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "name@example.com"
+            PGADMIN_DEFAULT_PASSWORD: "admin"
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+        volumes:
+            - .docker/data/pgadmin:/var/lib/pgadmin
+
+        ports:
+            - "5051:80"
+        networks:
+            - digisource
+volumes:
+    postgres:
+    pgadmin:

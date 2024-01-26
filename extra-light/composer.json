@@ -1,0 +1,9 @@
+{
+    "require": {
+        "firebase/php-jwt": "^6.9",
+        "paragonie/sodium_compat": "^1.17",
+        "symfony/http-foundation": "^5.4",
+        "izniburak/router": "^2.5",
+        "rakit/validation": "^1.4"
+    }
+}

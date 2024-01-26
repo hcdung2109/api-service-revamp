@@ -1,0 +1,25 @@
+{
+    "name": "digisource/candidates",
+    "description": "",
+    "authors": [
+        {
+            "name": "DigisourceTeam",
+            "email": "info@digisource.vn"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Digisource\\Candidates\\Providers\\CandidateServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Digisource\\Candidates\\": ""
+        }
+    }
+}

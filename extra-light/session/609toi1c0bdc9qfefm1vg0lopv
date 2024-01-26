@@ -1,0 +1,9 @@
+currency_id=23
+thousands_sep=,
+decimal_point=.
+date_format=YYYY-MM-DD
+addons=addons
+service_url=http://localhost:2020/
+ws_url=ws://127.0.0.1:2021/
+company_id=ROOT
+session_id=f5a6c891-970d-4235-9ce4-6ba0df31b6f7

@@ -1,0 +1,11 @@
+{
+    "name": "Calendars",
+    "alias": "calendars",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Digisource\\Calendars\\Providers\\CalendarsServiceProvider"
+    ],
+    "files": []
+}

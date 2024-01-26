@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/organizations",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Digisource\\Organizations\\": "",
+            "Digisource\\Organizations\\App\\": "app/",
+            "Digisource\\Organizations\\Database\\Factories\\": "database/factories/",
+            "Digisource\\Organizations\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digisource\\Organizations\\Tests\\": "tests/"
+        }
+    }
+}

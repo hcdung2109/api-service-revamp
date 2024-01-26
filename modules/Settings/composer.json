@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/settings",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Digisource\\Settings\\": "",
+            "Digisource\\Settings\\App\\": "app/",
+            "Digisource\\Settings\\Database\\Factories\\": "database/factories/",
+            "Digisource\\Settings\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digisource\\Settings\\Tests\\": "tests/"
+        }
+    }
+}

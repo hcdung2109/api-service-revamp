@@ -1,0 +1,11 @@
+{
+    "name": "Vendors",
+    "alias": "vendors",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Digisource\\Vendors\\Providers\\VendorsServiceProvider"
+    ],
+    "files": []
+}

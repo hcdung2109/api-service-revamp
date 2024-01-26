@@ -1,0 +1,11 @@
+{
+    "name": "Dashboards",
+    "alias": "dashboards",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Digisource\\Dashboards\\Providers\\DashboardsServiceProvider"
+    ],
+    "files": []
+}

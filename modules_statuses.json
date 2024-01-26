@@ -1,0 +1,15 @@
+{
+    "Core": true,
+    "Candidates": true,
+    "Companies": true,
+    "Jobs": true,
+    "Notifications": true,
+    "Reports": true,
+    "Dashboards": true,
+    "Organizations": true,
+    "Common": true,
+    "Users": true,
+    "Settings": true,
+    "Calendars": true,
+    "Vendors": true
+}

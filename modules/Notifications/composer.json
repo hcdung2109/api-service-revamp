@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/notifications",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Digisource\\Notifications\\": "",
+            "Digisource\\Notifications\\App\\": "app/",
+            "Digisource\\Notifications\\Database\\Factories\\": "database/factories/",
+            "Digisource\\Notifications\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digisource\\Notifications\\Tests\\": "tests/"
+        }
+    }
+}

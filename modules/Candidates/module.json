@@ -1,0 +1,11 @@
+{
+    "name": "Candidates",
+    "alias": "candidates",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Digisource\\Candidates\\Providers\\CandidateServiceProvider"
+    ],
+    "files": []
+}

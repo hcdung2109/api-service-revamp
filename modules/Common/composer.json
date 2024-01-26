@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/common",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Digisource\\Common\\": "",
+            "Digisource\\Common\\App\\": "app/",
+            "Digisource\\Common\\Database\\Factories\\": "database/factories/",
+            "Digisource\\Common\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digisource\\Common\\Tests\\": "tests/"
+        }
+    }
+}
