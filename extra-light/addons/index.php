@@ -343,17 +343,17 @@ $router->group('api', function ($router) use ($appSession) {
 
     $router->group('organizations', function ($router) {
 
-        $router->get('/organization-manager', 'OrganizationController@get_organization_manager');
+        // $router->get('/organization-manager', 'OrganizationController@get_organization_manager');
 
-        $router->get('/organization', 'OrganizationController@get_organization_member');
-        $router->post('/organization', 'OrganizationController@create_organization_member');
-        $router->post('/organization/:uuid', 'OrganizationController@update_organization_member');
-        $router->get('/organization/:uuid', 'OrganizationController@get_organization_by_id_member');
-        $router->delete('/organization/:uuid', 'OrganizationController@delete_organization_member');
+        // $router->get('/organization', 'OrganizationController@get_organization_member');
+        // $router->post('/organization', 'OrganizationController@create_organization_member');
+        // $router->post('/organization/:uuid', 'OrganizationController@update_organization_member');
+        // $router->get('/organization/:uuid', 'OrganizationController@get_organization_by_id_member');
+        // $router->delete('/organization/:uuid', 'OrganizationController@delete_organization_member');
 
-        $router->post('/organization-password/:uuid', 'OrganizationController@update_organization_password_member');
+        // $router->post('/organization-password/:uuid', 'OrganizationController@update_organization_password_member');
 
-        $router->get('/organization-org-chart', 'OrganizationController@get_organization_org_chart');
+        // $router->get('/organization-org-chart', 'OrganizationController@get_organization_org_chart');
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('dashboards', function ($router) {
