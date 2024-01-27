@@ -293,37 +293,37 @@ $router->group('api', function ($router) use ($appSession) {
 
     $router->group('vendors', function ($router) {
 
-        $router->get('/vendor-type', 'SettingsVendorController@get_vendor_type');
+        // $router->get('/vendor-type', 'SettingsVendorController@get_vendor_type');
 
-        $router->get('/vendor', 'VendorController@get_vendor');
-        $router->post('/vendor', 'VendorController@create_vendor');
-        $router->post('/vendor/:uuid', 'VendorController@update_vendor');
-        $router->get('/vendor/:uuid', 'VendorController@get_vendor_by_id');
-        $router->delete('/vendor/:uuid', 'VendorController@delete_vendor');
+        // $router->get('/vendor', 'VendorController@get_vendor');
+        // $router->post('/vendor', 'VendorController@create_vendor');
+        // $router->post('/vendor/:uuid', 'VendorController@update_vendor');
+        // $router->get('/vendor/:uuid', 'VendorController@get_vendor_by_id');
+        // $router->delete('/vendor/:uuid', 'VendorController@delete_vendor');
 
-        $router->get('/citys', 'SettingsLocationsController@get_expect_location');
-        $router->get('/districts/:id', 'SettingsLocationsController@get_districts');
-        $router->get('/wards/:id', 'SettingsLocationsController@get_wards');
-        $router->get('/vendor-sources', 'SettingsCandidateController@get_candidate_sources');
+        // $router->get('/citys', 'SettingsLocationsController@get_expect_location');
+        // $router->get('/districts/:id', 'SettingsLocationsController@get_districts');
+        // $router->get('/wards/:id', 'SettingsLocationsController@get_wards');
+        // $router->get('/vendor-sources', 'SettingsCandidateController@get_candidate_sources');
 
-        $router->get('/notes', 'VendorController@get_vendor_notes');
-        $router->post('/notes', 'VendorController@create_vendor_notes');
-        $router->post('/notes/:uuid', 'VendorController@update_vendor_notes');
-        $router->get('/notes/:uuid', 'VendorController@get_vendor_notes_by_id');
-        $router->delete('/notes/:uuid', 'VendorController@delete_vendor_notes');
+        // $router->get('/notes', 'VendorController@get_vendor_notes');
+        // $router->post('/notes', 'VendorController@create_vendor_notes');
+        // $router->post('/notes/:uuid', 'VendorController@update_vendor_notes');
+        // $router->get('/notes/:uuid', 'VendorController@get_vendor_notes_by_id');
+        // $router->delete('/notes/:uuid', 'VendorController@delete_vendor_notes');
 
-        $router->post('/add-vendor-followed', 'VendorController@add_vendor_followed');
-        $router->delete('/remove-vendor-followed/:uuid', 'VendorController@remove_vendor_followed');
+        // $router->post('/add-vendor-followed', 'VendorController@add_vendor_followed');
+        // $router->delete('/remove-vendor-followed/:uuid', 'VendorController@remove_vendor_followed');
 
-        $router->get('/vendor-soft-column', 'VendorController@vendor_soft_column');
-        $router->get('/vendor-soft-by', 'VendorController@vendor_soft_by');
+        // $router->get('/vendor-soft-column', 'VendorController@vendor_soft_column');
+        // $router->get('/vendor-soft-by', 'VendorController@vendor_soft_by');
 
-        $router->get('/vendor-job-opening', 'VendorController@get_job_opening');
-        $router->get('/vendor-commissions', 'VendorController@get_vendor_commission');
+        // $router->get('/vendor-job-opening', 'VendorController@get_job_opening');
+        // $router->get('/vendor-commissions', 'VendorController@get_vendor_commission');
 
 
-        $router->get('/vendor-main-account', 'VendorController@get_vendor_main_account');
-        $router->post('/vendor-main-account', 'VendorController@create_vendor_main_account');
+        // $router->get('/vendor-main-account', 'VendorController@get_vendor_main_account');
+        // $router->post('/vendor-main-account', 'VendorController@create_vendor_main_account');
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('comments', function ($router) {
