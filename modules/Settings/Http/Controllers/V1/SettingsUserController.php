@@ -362,61 +362,29 @@ class SettingsUserController extends Controller
     // START USER DEPARTMENT
     public function get_user_department(Request $request)
     {
-        $param = $request->query->all();
+        $user = auth()->user();
 
-        $p =  $param['p'] ?? 0;
-        $ps =  $param['ps'];
+        $param = $request->all();
 
-        $sql = "SELECT d1.id, d1.user_id, d1.rel_id, d1.group_id, d1.company_id";
-        $sql = $sql . ", d2.name, d2.user_name, d2.email, d3.name AS group_name, d4.name AS department_name";
-        $sql = $sql . " FROM res_user_company d1";
-        $sql = $sql . " LEFT OUTER JOIN res_user d2 ON(d1.user_id = d2.id)";
-        $sql = $sql . " LEFT OUTER JOIN res_user_group d3 ON(d1.group_id = d3.id)";
-        $sql = $sql . " LEFT OUTER JOIN res_company d4 ON(d1.company_id = d4.id)";
-        $sql = $sql . " WHERE d1.status=0 AND (d1.company_id='" . $user->company_id . "' OR d4.parent_id='" . $user->company_id . "')";
+        $p =  $param['p'] ?? 1;
+        $ps =  $param['ps']??10;
 
-        if ($ps != "") {
-            $arrPaging = $this->appSession->getTier()->paging($sql, $p, $ps, "d1.create_date ASC");
+        $result = DB::table('res_user_company')
+            ->leftJoin('res_user', 'res_user_company.user_id', '=', 'res_user.id')
+            ->leftJoin('res_user_group', 'res_user_company.group_id', '=', 'res_user_group.id')
+            ->leftJoin('res_company', 'res_user_company.company_id', '=', 'res_company.id')
+            ->select("res_user_company.id", "res_user_company.user_id", "res_user_company.rel_id", "res_user_company.group_id", "res_user_company.company_id", "res_user.name", "res_user.user_name","res_user.email","res_user_group.name AS group_name","res_company.name AS department_name")
+            ->where(function ($query) use ($user) {
+                $query->where('res_user_company.company_id', '=', $user->company_id)
+                    ->orWhere('res_company.parent_id', '=', $user->company_id);
+            })
+            ->where("res_user_company.status","=", 0)
+            ->paginate($ps, ['*'], 'page', $p);
 
-            $arrResult = $this->appSession->getTier()->getArrayPaging($this->msg, $this->appSession, $arrPaging, $p, $ps);
+        $this->addData($result);
+        $this->setMessage("Thành công.");
 
-            $this->msg->add("query", $arrResult->sql);
-
-            $result = $this->appSession->getTier()->getArray($this->msg);
-        } else {
-            $this->msg->add("query", $sql);
-            $result = $this->appSession->getTier()->getArray($this->msg);
-        }
-        $data = array();
-        for ($i = 0; $i < count($result); $i++) {
-            $arr = array();
-
-            $arr['id'] = $result[$i][0];
-            $arr['user_id'] = $result[$i][1];
-            $arr['rel_id'] = $result[$i][2];
-            $arr['group_id'] = $result[$i][3];
-            $arr['department_id'] = $result[$i][4];
-            $arr['name'] = $result[$i][5];
-            $arr['user_name'] = $result[$i][6];
-            $arr['email'] = $result[$i][7];
-            $arr['group_name'] = $result[$i][8];
-            $arr['department_name'] = $result[$i][9];
-
-            $data[] = $arr;
-        }
-
-        $message = [
-            'status' => true,
-            'total' => $arrResult->total,
-            'per_page' => $arrResult->per_page,
-            'current_page' => $arrResult->current_page,
-            'from' => $arrResult->from,
-            'to' => $arrResult->to,
-            'data' => ['user_departments' => $data],
-            'message' => "Lấy danh sách users department thành công."
-        ];
-
-        return $this->appSession->getTier()->response($message, $response);
+        return $this->getResponse();
     }
 
     public function create_user_department(Request $request)
