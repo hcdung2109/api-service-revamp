@@ -9,7 +9,7 @@ use Digisource\Vendors\Services\V1\VendorTypeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use Tymon\JWTAuth\Contracts\Providers\Auth;
+use Digisource\Core\Constant\Status;
 
 
 class VendorTypesController extends Controller
@@ -20,6 +20,16 @@ class VendorTypesController extends Controller
     public function __construct(VendorTypeServiceFactory $vendorTypeServiceFactory)
     {
         $this->vendorTypeService = $vendorTypeServiceFactory;
+    }
+
+    public function getVendorType(Request $request)
+    {
+        $page = $request->get('p', 1);
+        $pageSize = $request->get('ps', 10);
+        $data = $this->vendorTypeService->getVendorTypeByStatus($page, $pageSize, 0);
+        $this->addData($data);
+
+        return $this->getResponse();
     }
 
     public function get_vendor_type(Request $request)

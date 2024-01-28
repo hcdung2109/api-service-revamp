@@ -44,6 +44,18 @@ class VendorTypeService implements VendorTypeServiceFactory
         return $rs;
     }
 
+    public function getVendorTypeByStatus($page = 1, $pageSize = 10, $status = 0)
+    {
+        $user = auth()->user();
+
+        $rs = VendorType::select('id','name')
+            ->where('status', $status)
+            ->where('company_id', $user->company_id)
+            ->paginate($pageSize, ['*'], 'page', $page);
+
+        return $rs;
+    }
+
     /**
      * @param $id
      * @return array|mixed
@@ -66,8 +78,8 @@ class VendorTypeService implements VendorTypeServiceFactory
                 'id' => $id,
                 'create_uid' => $user->id,
                 'write_uid' => $user->id,
-                
-                
+
+
                 'status' => Status::ACTIVE,
                 'company_id' => $user->company_id,
                 'name' => $params['name'],
@@ -86,7 +98,7 @@ class VendorTypeService implements VendorTypeServiceFactory
     public function update_vendor_type(Request $request, $id)
     {
         $vendorType = $this->vendorTypeRepository->update($id, [
-                
+
                 'name' => $request->name
             ]
         );

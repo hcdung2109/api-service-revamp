@@ -29,7 +29,7 @@ class SettingsCandidateService implements SettingsCandidateServiceFactory
     public function getCandidateSources(array $request)
     {
         $p = Arr::get($request, 'p', 0);
-        $ps = Arr::get($request, 'ps', null);
+        $ps = Arr::get($request, 'ps', 10);
 
         $query = $this->sourcesRepository->where('status', 0)
             ->where('company_id', auth()->user()->company_id);
@@ -38,7 +38,7 @@ class SettingsCandidateService implements SettingsCandidateServiceFactory
             $result = $query->paginate($ps, ['*'], 'p', $p);
             $current = $result->currentPage();
             return [
-                "items" => $result->items(),
+                "candidate_sources" => $result->items(),
                 "total" => $result->total(),
                 "total_page" => $result->lastPage(),
                 "first_page" => 1,
