@@ -38,3 +38,19 @@ Route::group(
         $router->get('/logout', 'AuthController@logout');
     }
 );
+
+//$router->group('profiles', function ($router) {
+
+
+//}, ['before' => 'AuthMiddlewares']);
+
+Route::group(
+    [
+        'middleware' => $middlewares,
+        'prefix' => 'v1/profiles'
+    ],
+    function ($router) {
+        $router->get('/profile', 'UsersController@get_profile_by_id');
+        $router->post('/profile/{uuid}', 'UsersController@update_profile');
+    }
+);

@@ -335,11 +335,11 @@ $router->group('api', function ($router) use ($appSession) {
         $router->delete('/comment/:uuid', 'CommentsController@delete_comments');
     }, ['before' => 'AuthMiddlewares']);
 
-    $router->group('profiles', function ($router) {
+    //$router->group('profiles', function ($router) {
 
         //$router->get('/profile', 'UserController@get_profile_by_id');
         //$router->post('/profile/:uuid', 'UserController@update_profile');
-    }, ['before' => 'AuthMiddlewares']);
+    //}, ['before' => 'AuthMiddlewares']);
 
     $router->group('organizations', function ($router) {
 

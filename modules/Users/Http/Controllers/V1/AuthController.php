@@ -61,21 +61,21 @@ class AuthController extends Controller
                 WHERE d1.id = ? AND d1.status =0 AND d2.status= 0";
 
         $results = DB::select($sql, [$user->id]);
-        $data = $results[0];
+        $row = $results[0];
 
         $_user = [
-            "date_format" => $data->date_format,
-            "thousands_sep" => $data->thousands_sep,
-            "decimal_point" => $data->decimal_point,
-            "avatar" => $data->avatar,
+            "date_format" => $row->date_format,
+            "thousands_sep" => $row->thousands_sep,
+            "decimal_point" => $row->decimal_point,
+            "avatar" => $row->avatar,
             "user_id" => $user->id,
             "name" => $user->name,
             "user_name" =>  $user->user_name,
             "company_id" => $user->company_id,
-            "user_group_id" => $data->user_group_id,
-            "user_group_name" => $data->user_group_name,
-            "parent_company_id" => $data->parent_company_id,
-            "lang_id" => $data->lang_id,
+            "user_group_id" => $row->user_group_id,
+            "user_group_name" => $row->user_group_name,
+            "parent_company_id" => $row->parent_company_id,
+            "lang_id" => $row->lang_id,
         ];
 
         $data = [

@@ -16,5 +16,6 @@ final class Constant
     const FILE_LOGO = 'logo';
     const FILE_PORTFOLIO = 'portfolio';
     const FILE_RESUME = 'resume';
+    const FILE_AVATAR = 'avatar';
 
 }
