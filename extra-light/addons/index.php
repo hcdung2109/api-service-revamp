@@ -118,20 +118,20 @@ $router->group('api', function ($router) use ($appSession) {
         //$router->get('/user/:uuid', 'SettingsUserController@get_user_by_id');
         //$router->delete('/user/:uuid', 'SettingsUserController@delete_user');
 
-        $router->get('/user-department', 'SettingsUserController@get_user_department');
-        $router->post('/user-department', 'SettingsUserController@create_user_department');
-        $router->post('/user-department/:uuid', 'SettingsUserController@update_user_department');
-        $router->get('/user-department/:uuid', 'SettingsUserController@get_user_department_by_id');
-        $router->delete('/user-department/:uuid', 'SettingsUserController@delete_user_department');
+        //$router->get('/user-department', 'SettingsUserController@get_user_department');
+        //$router->post('/user-department', 'SettingsUserController@create_user_department');
+        //$router->post('/user-department/:uuid', 'SettingsUserController@update_user_department');
+        //$router->get('/user-department/:uuid', 'SettingsUserController@get_user_department_by_id');
+        //$router->delete('/user-department/:uuid', 'SettingsUserController@delete_user_department');
 
-        $router->get('/vendor-commission-metric', 'SettingsVendorController@get_vendor_commission_metric');
-        $router->post('/vendor-commission-metric', 'SettingsVendorController@create_vendor_commission_metric');
-        $router->post('/vendor-commission-metric/:uuid', 'SettingsVendorController@update_vendor_commission_metric');
-        $router->get('/vendor-commission-metric/:uuid', 'SettingsVendorController@get_vendor_commission_metric_by_id');
-        $router->delete('/vendor-commission-metric/:uuid', 'SettingsVendorController@delete_vendor_commission_metric');
+        //$router->get('/vendor-commission-metric', 'SettingsVendorController@get_vendor_commission_metric');
+        //$router->post('/vendor-commission-metric', 'SettingsVendorController@create_vendor_commission_metric');
+        //$router->post('/vendor-commission-metric/:uuid', 'SettingsVendorController@update_vendor_commission_metric');
+        //$router->get('/vendor-commission-metric/:uuid', 'SettingsVendorController@get_vendor_commission_metric_by_id');
+        //$router->delete('/vendor-commission-metric/:uuid', 'SettingsVendorController@delete_vendor_commission_metric');
 
-        $router->get('/organization-permission', 'SettingsOrganizationController@get_permission');
-        $router->post('/organization-permission/:uuid', 'SettingsOrganizationController@update_permission');
+        //$router->get('/organization-permission', 'SettingsOrganizationController@get_permission');
+        //$router->post('/organization-permission/:uuid', 'SettingsOrganizationController@update_permission');
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('candidates', function ($router) {
