@@ -105,12 +105,12 @@ $router->group('api', function ($router) use ($appSession) {
         // $router->get('/organization-role/:uuid', 'SettingsOrganizationController@get_role_by_id');
         // $router->delete('/organization-role/:uuid', 'SettingsOrganizationController@delete_role');
 
-        $router->get('/organization-department', 'SettingsOrganizationController@get_department');
-        $router->get('/organization-department-all', 'SettingsOrganizationController@get_department_all');
-        $router->post('/organization-department', 'SettingsOrganizationController@create_department');
-        $router->post('/organization-department/:uuid', 'SettingsOrganizationController@update_department');
-        $router->get('/organization-department/:uuid', 'SettingsOrganizationController@get_department_by_id');
-        $router->delete('/organization-department/:uuid', 'SettingsOrganizationController@delete_department');
+        //$router->get('/organization-department', 'SettingsOrganizationController@get_department');
+        //$router->get('/organization-department-all', 'SettingsOrganizationController@get_department_all');
+        //$router->post('/organization-department', 'SettingsOrganizationController@create_department');
+        //$router->post('/organization-department/:uuid', 'SettingsOrganizationController@update_department');
+        //$router->get('/organization-department/:uuid', 'SettingsOrganizationController@get_department_by_id');
+        //$router->delete('/organization-department/:uuid', 'SettingsOrganizationController@delete_department');
 
         $router->get('/user', 'SettingsUserController@get_user');
         $router->post('/user', 'SettingsUserController@create_user');
@@ -337,8 +337,8 @@ $router->group('api', function ($router) use ($appSession) {
 
     $router->group('profiles', function ($router) {
 
-        $router->get('/profile', 'UserController@get_profile_by_id');
-        $router->post('/profile/:uuid', 'UserController@update_profile');
+        //$router->get('/profile', 'UserController@get_profile_by_id');
+        //$router->post('/profile/:uuid', 'UserController@update_profile');
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('organizations', function ($router) {

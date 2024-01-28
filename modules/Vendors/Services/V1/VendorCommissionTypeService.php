@@ -39,9 +39,9 @@ class VendorCommissionTypeService implements VendorTypeServiceFactory
         $user = auth()->user();
 
         $rs = VendorCommissionType::select('id','name')
-                    ->where('status', Status::ACTIVE)
-                    ->where('company_id', $user->company_id)
-                    ->paginate($pageSize, ['*'], 'page', $page);
+            ->where('status', Status::ACTIVE)
+            ->where('company_id', $user->company_id)
+            ->paginate($pageSize, ['*'], 'page', $page);
 
         return $rs;
     }

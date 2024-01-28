@@ -3,10 +3,13 @@
 namespace Digisource\Users\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use Digisource\Core\Constant\Status;
 use Digisource\Users\Contracts\UsersServiceFactory;
+use Digisource\Users\Entities\User;
 use Digisource\Users\Services\V1\UsersService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -40,18 +43,49 @@ class AuthController extends Controller
             $this->setMessage("Unauthenticated");
             return $this->getResponse();
         }
+
         return $this->respondWithToken($token);
     }
 
     protected function respondWithToken($token)
     {
         $user = auth()->user();
-        $data = [
-            'user' => $user,
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60 //mention the guard name inside the auth fn
+
+        $sql = "SELECT d1.id, d1.password, d1.user_name, d1.name, d1.company_id, d1.date_format, d1.thousands_sep, d1.time_format, d1.decimal_point,
+                d1.avatar, d1.lang_id,
+                d2.group_id AS user_group_id, d4.name AS user_group_name, d5.parent_id AS parent_company_id
+                FROM res_user d1
+                LEFT OUTER JOIN res_user_company d2 ON(d1.id = d2.user_id AND d2.status =0)
+                LEFT OUTER JOIN res_user_group d4 ON(d2.group_id = d4.id)
+                LEFT OUTER JOIN res_company d5 ON(d2.company_id = d5.id)
+                WHERE d1.id = ? AND d1.status =0 AND d2.status= 0";
+
+        $results = DB::select($sql, [$user->id]);
+        $data = $results[0];
+
+        $_user = [
+            "date_format" => $data->date_format,
+            "thousands_sep" => $data->thousands_sep,
+            "decimal_point" => $data->decimal_point,
+            "avatar" => $data->avatar,
+            "user_id" => $user->id,
+            "name" => $user->name,
+            "user_name" =>  $user->user_name,
+            "company_id" => $user->company_id,
+            "user_group_id" => $data->user_group_id,
+            "user_group_name" => $data->user_group_name,
+            "parent_company_id" => $data->parent_company_id,
+            "lang_id" => $data->lang_id,
         ];
+
+        $data = [
+            'user' => $_user,
+            'token' => $token,
+            //'access_token' => $token,
+            //'token_type' => 'bearer',
+            //'expires_in' => auth('api')->factory()->getTTL() * 60 //mention the guard name inside the auth fn
+        ];
+
         $this->addData($data);
         return $this->getResponse();
     }
