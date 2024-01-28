@@ -198,17 +198,17 @@ $router->group('api', function ($router) use ($appSession) {
         $router->get('/invoice/:uuid', 'CompanyController@get_invoices_by_id');
         $router->delete('/invoice/:uuid', 'CompanyController@delete_invoices');
 
-        //$router->get('/company-commissions', 'CompanyController@get_company_commissions');// QUAN
-        //$router->post('/company-commissions', 'CompanyController@create_company_commissions');// QUAN
-        //$router->post('/company-commissions/:uuid', 'CompanyController@update_company_commissions');// QUAN
-        //$router->get('/company-commissions/:uuid', 'CompanyController@get_company_commissions_by_id');// QUAN
-        //$router->delete('/company-commissions/:uuid', 'CompanyController@delete_company_commissions');// QUAN
+        //$router->get('/company-commissions', 'CompanyController@get_company_commissions');//QUAN
+        //$router->post('/company-commissions', 'CompanyController@create_company_commissions');//QUAN
+        //$router->post('/company-commissions/:uuid', 'CompanyController@update_company_commissions');//QUAN
+        //$router->get('/company-commissions/:uuid', 'CompanyController@get_company_commissions_by_id');//QUAN
+        //$router->delete('/company-commissions/:uuid', 'CompanyController@delete_company_commissions');//QUAN
 
-        //$router->get('/notes', 'CompanyController@get_company_notes'); // QUAN
-        //$router->post('/notes', 'CompanyController@create_company_notes'); // QUAN
-        //$router->post('/notes/:uuid', 'CompanyController@update_company_notes'); // QUAN
-        //$router->get('/notes/:uuid', 'CompanyController@get_job_company_by_id'); // QUAN
-        //$router->delete('/notes/:uuid', 'CompanyController@delete_company_notes'); // QUAN
+        //$router->get('/notes', 'CompanyController@get_company_notes'); //QUAN
+        //$router->post('/notes', 'CompanyController@create_company_notes'); //QUAN
+        //$router->post('/notes/:uuid', 'CompanyController@update_company_notes'); //QUAN
+        //$router->get('/notes/:uuid', 'CompanyController@get_job_company_by_id'); //QUAN
+        //$router->delete('/notes/:uuid', 'CompanyController@delete_company_notes'); //QUAN
 
         $router->post('/add-companies-followed', 'CompanyController@add_companies_followed');
         $router->delete('/remove-companies-followed/:uuid', 'CompanyController@remove_companies_followed');

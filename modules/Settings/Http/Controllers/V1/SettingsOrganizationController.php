@@ -327,7 +327,7 @@ class SettingsOrganizationController extends Controller
     // END DEPARTMENT
 
     // START SETTINGS PERMISSION
-    public function getPermission(array $param)
+    public function get_permission(array $param)
     {
 
         $p =  $param['p'] ?? 0;
@@ -599,4 +599,5 @@ class SettingsOrganizationController extends Controller
         }
         return $data;
     }
+    
 }

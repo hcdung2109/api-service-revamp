@@ -72,7 +72,6 @@ trait BaseApiResponse
         $data['success'] = true;
         $data['status'] = $this->statusCode;
         $data['data'] = $this->data;
-        $data['message'] = $this->message;
         $data['error'] = 0;
 
         if ($this->errors || $this->exception || $this->data instanceof Exception) {
@@ -103,6 +102,8 @@ trait BaseApiResponse
                 $data['debug']['message'] = $this->exception->getPrivateMessage();
             }
         }
+
+        $data['message'] = $this->message ?? "Thành công";
 
         return response()->json($data, $this->statusCode, $this->headers);
     }
