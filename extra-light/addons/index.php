@@ -112,11 +112,11 @@ $router->group('api', function ($router) use ($appSession) {
         //$router->get('/organization-department/:uuid', 'SettingsOrganizationController@get_department_by_id');
         //$router->delete('/organization-department/:uuid', 'SettingsOrganizationController@delete_department');
 
-        $router->get('/user', 'SettingsUserController@get_user');
-        $router->post('/user', 'SettingsUserController@create_user');
-        $router->post('/user/:uuid', 'SettingsUserController@update_user');
-        $router->get('/user/:uuid', 'SettingsUserController@get_user_by_id');
-        $router->delete('/user/:uuid', 'SettingsUserController@delete_user');
+        //$router->get('/user', 'SettingsUserController@get_user');
+        //$router->post('/user', 'SettingsUserController@create_user');
+        //$router->post('/user/:uuid', 'SettingsUserController@update_user');
+        //$router->get('/user/:uuid', 'SettingsUserController@get_user_by_id');
+        //$router->delete('/user/:uuid', 'SettingsUserController@delete_user');
 
         $router->get('/user-department', 'SettingsUserController@get_user_department');
         $router->post('/user-department', 'SettingsUserController@create_user_department');
