@@ -24,29 +24,29 @@ class SettingsLocationsController extends Controller
         $this->data = $this->settingLocationSerivce->getCities($countryId);
         return $this->getResponse();
     }
-// END SETTINGS EXPECT LOCATION
+    // END SETTINGS EXPECT LOCATION
 
-// START SETTINGS NATIONALS
+    // START SETTINGS NATIONALS
     public function getCountries()
     {
         $this->data = $this->settingLocationSerivce->getCountries();
         return $this->getResponse();
     }
-// END SETTINGS NATIONALS
+    // END SETTINGS NATIONALS
 
-// START SETTINGS DISTRICTS
+    // START SETTINGS DISTRICTS
     public function getDistricts($id)
     {
         $this->data = $this->settingLocationSerivce->getDistricts($id);
         return $this->getResponse();
     }
-// END SETTINGS DISTRICTS
+    // END SETTINGS DISTRICTS
 
-// START SETTINGS WARDS
+    // START SETTINGS WARDS
     public function getWards($id)
     {
         $this->data = $this->settingLocationSerivce->getWards($id);
         return $this->getResponse();
     }
-// END SETTINGS WARDS
+    // END SETTINGS WARDS
 }

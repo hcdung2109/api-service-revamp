@@ -1,5 +1,7 @@
 <?php
 
+use Digisource\Settings\Http\Controllers\V1\SettingsCandidateController;
+use Digisource\Settings\Http\Controllers\V1\SettingsLocationsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +24,36 @@ Route::group(
         'prefix' => 'v1/vendors'
     ],
     function ($router) {
+        $router->get('/vendor-type', 'VendorTypesController@getVendorType');
+        $router->get('/vendor', 'VendorsController@getVendor');
+        $router->get('/vendor/{uuid}', 'VendorsController@getVendorById');
+        $router->post('/vendor', 'VendorsController@createVendor');
+        $router->post('/vendor/{uuid}', 'VendorsController@updateVendor');
+        $router->delete('/vendor/{uuid}', 'VendorsController@deleteVendor');
 
+        $router->get('/citys', [SettingsLocationsController::class, 'getCities']);
+        $router->get('/districts/{id}', [SettingsLocationsController::class, 'getDistricts']);
+        $router->get('/wards/{id}', [SettingsLocationsController::class, 'getWards']);
+        $router->get('/vendor-sources', [SettingsCandidateController::class, 'getCandidateSources']);
+
+        $router->get('/notes', 'VendorsController@get_vendor_notes');
+        $router->post('/notes', 'VendorsController@create_vendor_notes');
+        $router->post('/notes/{uuid}', 'VendorsController@update_vendor_notes');
+        $router->get('/notes/{uuid}', 'VendorsController@get_vendor_notes_by_id');
+        $router->delete('/notes/{uuid}', 'VendorsController@delete_vendor_notes');
+
+        $router->post('/add-vendor-followed', 'VendorsController@add_vendor_followed');
+        $router->delete('/remove-vendor-followed/{uuid}', 'VendorsController@remove_vendor_followed');
+
+        $router->get('/vendor-soft-column', 'VendorsController@vendor_soft_column');
+        $router->get('/vendor-soft-by', 'VendorsController@vendor_soft_by');
+
+        $router->get('/vendor-job-opening', 'VendorsController@get_job_opening');
+        $router->get('/vendor-commissions', 'VendorsController@get_vendor_commission');
+
+
+        $router->get('/vendor-main-account', 'VendorsController@get_vendor_main_account');
+        $router->post('/vendor-main-account', 'VendorsController@create_vendor_main_account');
     }
 );
 

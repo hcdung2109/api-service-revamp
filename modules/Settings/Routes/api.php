@@ -41,7 +41,7 @@ Route::group(
         $router->post('/candidate-levels/{uuid}', 'SettingsCandidateController@updateCandidateLevels');
         $router->get('/candidate-levels/{uuid}', 'SettingsCandidateController@getCandidateLevelsById');
         $router->delete('/candidate-levels/{uuid}', 'SettingsCandidateController@deleteCandidateLevels');
-    
+
         $router->get('/company-industries', 'SettingsCompanyController@getCompanyIndustries');
         $router->post('/company-industries', 'SettingsCompanyController@createCompanyIndustries');
         $router->post('/company-industries/{uuid}', 'SettingsCompanyController@updateCompanyIndustries');
