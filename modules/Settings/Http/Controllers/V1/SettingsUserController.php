@@ -5,6 +5,7 @@ namespace Digisource\Settings\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use Digisource\Common\Utils\Utils;
 use Digisource\Core\Constant\Constant;
+use Digisource\Core\Constant\Status;
 use Digisource\Users\Entities\User;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
@@ -133,7 +134,7 @@ class SettingsUserController extends Controller
         $email = $data['email'];
         $phone = $data['phone'];
 
-        $user = User::where('status',0)->findOrFail($uuid);
+        $user = User::where('status',0)->find($uuid);
 
         if ($user == null) {
             $this->setMessage("User không tồn tại.");
@@ -202,41 +203,18 @@ class SettingsUserController extends Controller
 
     public function delete_user(Request $request, $uuid)
     {
-        $sql = "SELECT d1.id FROM res_user d1 WHERE d1.status = 0 AND d1.id='" . $id . "'";
-        $this->msg->add("query", $sql);
-        $seen_id = $this->appSession->getTier()->getValue($this->msg);
-
-        $user = User::where('status',0)->findOrFail($uuid);
+        $user = User::where('status',0)->find($uuid);
 
         if ($user == null) {
             $this->setMessage("User không tồn tại.");
-            $this->
-            $message = [
-                'status' => true,
-                'message' => "User không tồn tại."
-            ];
         } else {
-            $builder = $this->appSession->getTier()->getBuilder("res_user");
-            $builder->update("id", $id);
-            $builder->update("status", 1);
+            $user->status = 1;
+            $user->save();
 
-            $sql = $this->appSession->getTier()->getUpdate($builder);
-            $this->msg->add("query", $sql);
-            $result = $this->appSession->getTier()->exec($this->msg);
-
-            if ($result == '1') {
-                $message = [
-                    'status' => true,
-                    'message' => "Tạo user thành công"
-                ];
-            } else {
-                $message = [
-                    'status' => false,
-                    'message' => "Tạo user thất bại"
-                ];
-            }
+            $this->setMessage("Xóa thành công.");
         }
-        return $this->appSession->getTier()->response($message, $response);
+
+        return $this->getResponse();
     }
 
     public function create_document_user(Request $request, $rel_id)
