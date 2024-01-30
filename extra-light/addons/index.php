@@ -179,7 +179,7 @@ $router->group('api', function ($router) use ($appSession) {
 
     $router->group('companies', function ($router) {
 
-        // $router->get('/company-industries', 'SettingsCompanyController@get_company_industries');
+        // $router->get('companies/company-industries', 'SettingsCompanyController@get_company_industries');
 
         //$router->get('/company', 'CompanyController@get_company');
         //$router->post('/company', 'CompanyController@create_company');
@@ -192,11 +192,11 @@ $router->group('api', function ($router) use ($appSession) {
         $router->get('/wards/:id', 'SettingsLocationsController@get_wards');
         $router->get('/company-sources', 'SettingsCandidateController@get_candidate_sources');
 
-        $router->get('/invoice', 'CompanyController@get_invoices');
-        $router->post('/invoice', 'CompanyController@create_invoices');
-        $router->post('/invoice/:uuid', 'CompanyController@update_invoices');
-        $router->get('/invoice/:uuid', 'CompanyController@get_invoices_by_id');
-        $router->delete('/invoice/:uuid', 'CompanyController@delete_invoices');
+        //$router->get('/invoice', 'CompanyController@get_invoices');
+        //$router->post('/invoice', 'CompanyController@create_invoices');
+        //$router->post('/invoice/:uuid', 'CompanyController@update_invoices');
+        //$router->get('/invoice/:uuid', 'CompanyController@get_invoices_by_id');
+        //$router->delete('/invoice/:uuid', 'CompanyController@delete_invoices');
 
         //$router->get('/company-commissions', 'CompanyController@get_company_commissions');//QUAN DONE
         //$router->post('/company-commissions', 'CompanyController@create_company_commissions');//QUAN DONE
