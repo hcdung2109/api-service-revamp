@@ -291,7 +291,7 @@ $router->group('api', function ($router) use ($appSession) {
         $router->delete('/job-hiring-team/:uuid', 'JobController@delete_job_hiring_team');
     }, ['before' => 'AuthMiddlewares']);
 
-    $router->group('vendors', function ($router) {
+    //$router->group('vendors', function ($router) {
 
         // $router->get('/vendor-type', 'SettingsVendorController@get_vendor_type');
 
@@ -324,7 +324,7 @@ $router->group('api', function ($router) use ($appSession) {
 
         // $router->get('/vendor-main-account', 'VendorController@get_vendor_main_account');
         // $router->post('/vendor-main-account', 'VendorController@create_vendor_main_account');
-    }, ['before' => 'AuthMiddlewares']);
+    //}, ['before' => 'AuthMiddlewares']);
 
     //$router->group('comments', function ($router) {
 
