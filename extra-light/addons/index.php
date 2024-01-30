@@ -26,7 +26,7 @@ $router->group('api', function ($router) use ($appSession) {
 //
 //    $router->post('/change-password', 'AuthController@change_password');
 
-    $router->group('settings', function ($router) {
+//    $router->group('settings', function ($router) {
 
 //        $router->get('/global-skills', 'SettingsGlobalController@get_skills');
 //        $router->post('/global-skills', 'SettingsGlobalController@create_skills');
@@ -132,9 +132,9 @@ $router->group('api', function ($router) use ($appSession) {
 
         //$router->get('/organization-permission', 'SettingsOrganizationController@get_permission');
         //$router->post('/organization-permission/:uuid', 'SettingsOrganizationController@update_permission');
-    }, ['before' => 'AuthMiddlewares']);
+//    }, ['before' => 'AuthMiddlewares']);
 
-    $router->group('candidates', function ($router) {
+//    $router->group('candidates', function ($router) {
 
 //        $router->get('/expect-locations', 'SettingsLocationsController@get_expect_location');
 
@@ -175,7 +175,7 @@ $router->group('api', function ($router) use ($appSession) {
 
         // $router->post('/add-candidate-followed', 'CandidateController@add_candidate_followed');
         // $router->delete('/remove-candidate-followed/:uuid', 'CandidateController@remove_candidate_followed');
-    }, ['before' => 'AuthMiddlewares']);
+//    }, ['before' => 'AuthMiddlewares']);
 
     $router->group('companies', function ($router) {
 
@@ -326,14 +326,14 @@ $router->group('api', function ($router) use ($appSession) {
         // $router->post('/vendor-main-account', 'VendorController@create_vendor_main_account');
     }, ['before' => 'AuthMiddlewares']);
 
-    $router->group('comments', function ($router) {
+    //$router->group('comments', function ($router) {
 
-        $router->get('/comment', 'CommentsController@get_comments');
-        $router->post('/comment', 'CommentsController@create_comments');
-        $router->post('/comment/:uuid', 'CommentsController@update_comments');
-        $router->get('/comment/:uuid', 'CommentsController@get_comments_by_id');
-        $router->delete('/comment/:uuid', 'CommentsController@delete_comments');
-    }, ['before' => 'AuthMiddlewares']);
+        //$router->get('/comment', 'CommentsController@get_comments');
+        //$router->post('/comment', 'CommentsController@create_comments');
+        //$router->post('/comment/:uuid', 'CommentsController@update_comments');
+        //$router->get('/comment/:uuid', 'CommentsController@get_comments_by_id');
+        //$router->delete('/comment/:uuid', 'CommentsController@delete_comments');
+    //}, ['before' => 'AuthMiddlewares']);
 
     //$router->group('profiles', function ($router) {
 
