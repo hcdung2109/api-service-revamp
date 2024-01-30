@@ -341,7 +341,7 @@ $router->group('api', function ($router) use ($appSession) {
         //$router->post('/profile/:uuid', 'UserController@update_profile');
     //}, ['before' => 'AuthMiddlewares']);
 
-    $router->group('organizations', function ($router) {
+    //$router->group('organizations', function ($router) {
 
         // $router->get('/organization-manager', 'OrganizationController@get_organization_manager');
 
@@ -354,7 +354,7 @@ $router->group('api', function ($router) use ($appSession) {
         // $router->post('/organization-password/:uuid', 'OrganizationController@update_organization_password_member');
 
         // $router->get('/organization-org-chart', 'OrganizationController@get_organization_org_chart');
-    }, ['before' => 'AuthMiddlewares']);
+    //}, ['before' => 'AuthMiddlewares']);
 
     $router->group('dashboards', function ($router) {
         $router->get('/total', 'DashboardController@get_total');
