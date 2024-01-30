@@ -11,5 +11,6 @@
     "Users": true,
     "Settings": true,
     "Calendars": true,
-    "Vendors": true
+    "Vendors": true,
+    "Comments": true
 }
