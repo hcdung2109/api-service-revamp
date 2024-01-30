@@ -266,11 +266,11 @@ $router->group('api', function ($router) use ($appSession) {
         //$router->get('/job-stages/:uuid', 'JobController@get_job_stages_by_id');//QUAN
         //$router->delete('/job-stages/:uuid', 'JobController@delete_job_stages');//QUAN
 
-        $router->get('/job-candidate-stages', 'JobController@get_job_candidate_stages');
-        $router->post('/job-candidate-stages', 'JobController@create_job_candidate_stages');
-        $router->post('/job-candidate-stages/:uuid', 'JobController@update_job_candidate_stages');
-        $router->get('/job-candidate-stages/:uuid', 'JobController@get_job_candidate_stages_by_id');
-        $router->delete('/job-candidate-stages/:uuid', 'JobController@delete_job_candidate_stages');
+        //$router->get('/job-candidate-stages', 'JobController@get_job_candidate_stages');
+        //$router->post('/job-candidate-stages', 'JobController@create_job_candidate_stages');
+        //$router->post('/job-candidate-stages/:uuid', 'JobController@update_job_candidate_stages');
+        //$router->get('/job-candidate-stages/:uuid', 'JobController@get_job_candidate_stages_by_id');
+        //$router->delete('/job-candidate-stages/:uuid', 'JobController@delete_job_candidate_stages');
 
         //$router->get('/job-commission', 'JobController@get_job_commissions');//QUAN
         //$router->post('/job-commission', 'JobController@create_job_commissions');//QUAN
