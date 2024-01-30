@@ -21,5 +21,11 @@ Route::group(
     ],
     function ($router) {
         $router->get('/company-industries', 'CompaniesController@getCompanyIndustries');
+
+        $router->get('/company', 'CompanyController@get_company');
+        $router->post('/company', 'CompanyController@create_company');
+        $router->post('/company/:uuid', 'CompanyController@update_company');
+        $router->get('/company/:uuid', 'CompanyController@get_company_by_id');
+        $router->delete('/company/:uuid', 'CompanyController@delete_company');
     }
 );

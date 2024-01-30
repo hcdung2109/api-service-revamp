@@ -181,11 +181,11 @@ $router->group('api', function ($router) use ($appSession) {
 
         // $router->get('/company-industries', 'SettingsCompanyController@get_company_industries');
 
-        $router->get('/company', 'CompanyController@get_company');
-        $router->post('/company', 'CompanyController@create_company');
-        $router->post('/company/:uuid', 'CompanyController@update_company');
-        $router->get('/company/:uuid', 'CompanyController@get_company_by_id');
-        $router->delete('/company/:uuid', 'CompanyController@delete_company');
+        //$router->get('/company', 'CompanyController@get_company');
+        //$router->post('/company', 'CompanyController@create_company');
+        //$router->post('/company/:uuid', 'CompanyController@update_company');
+        //$router->get('/company/:uuid', 'CompanyController@get_company_by_id');
+        //$router->delete('/company/:uuid', 'CompanyController@delete_company');
 
         $router->get('/citys', 'SettingsLocationsController@get_expect_location');
         $router->get('/districts/:id', 'SettingsLocationsController@get_districts');
