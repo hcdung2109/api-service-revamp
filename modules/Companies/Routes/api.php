@@ -21,5 +21,16 @@ Route::group(
     ],
     function ($router) {
         $router->get('/company-industries', 'CompaniesController@getCompanyIndustries');
+        $router->get('/company-commissions', 'CompaniesController@get_company_commissions');//QUAN
+        $router->post('/company-commissions', 'CompaniesController@create_company_commissions');//QUAN
+        $router->post('/company-commissions/{uuid}', 'CompaniesController@update_company_commissions');//QUAN
+        $router->get('/company-commissions/{uuid}', 'CompaniesController@get_company_commissions_by_id');//QUAN
+        $router->delete('/company-commissions/{uuid}', 'CompaniesController@delete_company_commissions');//QUAN
+
+        $router->get('/notes', 'CompaniesController@get_company_notes'); //QUAN
+        $router->post('/notes', 'CompaniesController@create_company_notes'); //QUAN
+        $router->post('/notes/{uuid}', 'CompaniesController@update_company_notes'); //QUAN
+        $router->get('/notes/{uuid}', 'CompaniesController@get_job_company_by_id'); //QUAN
+        $router->delete('/notes/{uuid}', 'CompaniesController@delete_company_notes'); //QUAN
     }
 );
