@@ -198,17 +198,17 @@ $router->group('api', function ($router) use ($appSession) {
         $router->get('/invoice/:uuid', 'CompanyController@get_invoices_by_id');
         $router->delete('/invoice/:uuid', 'CompanyController@delete_invoices');
 
-        //$router->get('/company-commissions', 'CompanyController@get_company_commissions');//QUAN
-        //$router->post('/company-commissions', 'CompanyController@create_company_commissions');//QUAN
-        //$router->post('/company-commissions/:uuid', 'CompanyController@update_company_commissions');//QUAN
-        //$router->get('/company-commissions/:uuid', 'CompanyController@get_company_commissions_by_id');//QUAN
-        //$router->delete('/company-commissions/:uuid', 'CompanyController@delete_company_commissions');//QUAN
+        //$router->get('/company-commissions', 'CompanyController@get_company_commissions');//QUAN DONE
+        //$router->post('/company-commissions', 'CompanyController@create_company_commissions');//QUAN DONE
+        //$router->post('/company-commissions/:uuid', 'CompanyController@update_company_commissions');//QUAN DONE
+        //$router->get('/company-commissions/:uuid', 'CompanyController@get_company_commissions_by_id');//QUAN DONE
+        //$router->delete('/company-commissions/:uuid', 'CompanyController@delete_company_commissions');//QUAN DONE
 
-        //$router->get('/notes', 'CompanyController@get_company_notes'); //QUAN
-        //$router->post('/notes', 'CompanyController@create_company_notes'); //QUAN
-        //$router->post('/notes/:uuid', 'CompanyController@update_company_notes'); //QUAN
-        //$router->get('/notes/:uuid', 'CompanyController@get_job_company_by_id'); //QUAN
-        //$router->delete('/notes/:uuid', 'CompanyController@delete_company_notes'); //QUAN
+        //$router->get('/notes', 'CompanyController@get_company_notes'); //QUAN DONE
+        //$router->post('/notes', 'CompanyController@create_company_notes'); //QUAN DONE
+        //$router->post('/notes/:uuid', 'CompanyController@update_company_notes'); //QUAN DONE
+        //$router->get('/notes/:uuid', 'CompanyController@get_job_company_by_id'); //QUAN DONE
+        //$router->delete('/notes/:uuid', 'CompanyController@delete_company_notes'); //QUAN DONE
 
         $router->post('/add-companies-followed', 'CompanyController@add_companies_followed');
         $router->delete('/remove-companies-followed/:uuid', 'CompanyController@remove_companies_followed');
@@ -236,47 +236,47 @@ $router->group('api', function ($router) use ($appSession) {
         $router->get('/job-types', 'SettingsJobController@get_job_types');
         $router->get('/job-categories', 'SettingsJobController@get_job_category');
 
-        //$router->get('/job-group', 'JobController@get_job_group');//QUAN
-        //$router->post('/job-group', 'JobController@create_job_group');//QUAN
-        //$router->post('/job-group/:uuid', 'JobController@update_job_group');//QUAN
-        //$router->get('/job-group/:uuid', 'JobController@get_job_group_by_id');//QUAN
-        //$router->delete('/job-group/:uuid', 'JobController@delete_job_group');//QUAN
+        //$router->get('/job-group', 'JobController@get_job_group');//QUAN DONE
+        //$router->post('/job-group', 'JobController@create_job_group');//QUAN DONE
+        //$router->post('/job-group/:uuid', 'JobController@update_job_group');//QUAN DONE
+        //$router->get('/job-group/:uuid', 'JobController@get_job_group_by_id');//QUAN DONE
+        //$router->delete('/job-group/:uuid', 'JobController@delete_job_group');//QUAN DONE
 
-        //$router->get('/job-group-permission', 'JobController@get_job_group_permission');//QUAN
-        //$router->post('/job-group-permission', 'JobController@create_job_group_permission');//QUAN
-        //$router->post('/job-group-permission/:uuid', 'JobController@update_job_group_permission');//QUAN
-        //$router->get('/job-group-permission/:uuid', 'JobController@get_job_group_permission_by_id');//QUAN
-        //$router->delete('/job-group-permission/:uuid', 'JobController@delete_job_group_permission');//QUAN
+        //$router->get('/job-group-permission', 'JobController@get_job_group_permission');//QUAN KHONG CO
+        //$router->post('/job-group-permission', 'JobController@create_job_group_permission');//QUAN KHONG CO
+        //$router->post('/job-group-permission/:uuid', 'JobController@update_job_group_permission');//QUAN KHONG CO
+        //$router->get('/job-group-permission/:uuid', 'JobController@get_job_group_permission_by_id');//QUAN KHONG CO
+        //$router->delete('/job-group-permission/:uuid', 'JobController@delete_job_group_permission');//QUAN KHONG CO
 
-        //$router->get('/skills', 'JobController@get_job_skills');//QUAN
-        //$router->post('/skills', 'JobController@create_job_skills');//QUAN
-        //$router->post('/skills/:uuid', 'JobController@update_job_skills');//QUAN
-        //$router->get('/skills/:uuid', 'JobController@get_job_skills_by_id');//QUAN
-        //$router->delete('/skills/:uuid', 'JobController@delete_job_skills');//QUAN
+        //$router->get('/skills', 'JobController@get_job_skills');//QUAN DONE
+        //$router->post('/skills', 'JobController@create_job_skills');//QUAN DONE
+        //$router->post('/skills/:uuid', 'JobController@update_job_skills');//QUAN DONE
+        //$router->get('/skills/:uuid', 'JobController@get_job_skills_by_id');//QUAN DONE
+        //$router->delete('/skills/:uuid', 'JobController@delete_job_skills');//QUAN DONE
 
-        //$router->get('/notes', 'JobController@get_job_notes');//QUAN
-        //$router->post('/notes', 'JobController@create_job_notes');//QUAN
-        //$router->post('/notes/:uuid', 'JobController@update_job_notes');//QUAN
-        //$router->get('/notes/:uuid', 'JobController@get_job_notes_by_id');//QUAN
-        //$router->delete('/notes/:uuid', 'JobController@delete_job_notes');//QUAN
+        //$router->get('/notes', 'JobController@get_job_notes');//QUAN DONE
+        //$router->post('/notes', 'JobController@create_job_notes');//QUAN DONE
+        //$router->post('/notes/:uuid', 'JobController@update_job_notes');//QUAN DONE
+        //$router->get('/notes/:uuid', 'JobController@get_job_notes_by_id');//QUAN DONE
+        //$router->delete('/notes/:uuid', 'JobController@delete_job_notes');//QUAN DONE
 
-        //$router->get('/job-stages', 'JobController@get_job_stages');//QUAN
-        //$router->post('/job-stages', 'JobController@create_job_stages');//QUAN
-        //$router->post('/job-stages/:uuid', 'JobController@update_job_stages');//QUAN
-        //$router->get('/job-stages/:uuid', 'JobController@get_job_stages_by_id');//QUAN
-        //$router->delete('/job-stages/:uuid', 'JobController@delete_job_stages');//QUAN
+        //$router->get('/job-stages', 'JobController@get_job_stages');//QUAN DONE
+        //$router->post('/job-stages', 'JobController@create_job_stages');//QUAN DONE
+        //$router->post('/job-stages/:uuid', 'JobController@update_job_stages');//QUAN DONE
+        //$router->get('/job-stages/:uuid', 'JobController@get_job_stages_by_id');//QUAN DONE
+        //$router->delete('/job-stages/:uuid', 'JobController@delete_job_stages');//QUAN DONE
 
-        //$router->get('/job-candidate-stages', 'JobController@get_job_candidate_stages');
-        //$router->post('/job-candidate-stages', 'JobController@create_job_candidate_stages');
-        //$router->post('/job-candidate-stages/:uuid', 'JobController@update_job_candidate_stages');
-        //$router->get('/job-candidate-stages/:uuid', 'JobController@get_job_candidate_stages_by_id');
-        //$router->delete('/job-candidate-stages/:uuid', 'JobController@delete_job_candidate_stages');
+        // $router->get('/job-candidate-stages', 'JobController@get_job_candidate_stages');//QUAN DONE
+        // $router->post('/job-candidate-stages', 'JobController@create_job_candidate_stages');//QUAN DONE
+        // $router->post('/job-candidate-stages/:uuid', 'JobController@update_job_candidate_stages');//QUAN DONE
+        // $router->get('/job-candidate-stages/:uuid', 'JobController@get_job_candidate_stages_by_id');//QUAN DONE
+        // $router->delete('/job-candidate-stages/:uuid', 'JobController@delete_job_candidate_stages');//QUAN DONE
 
-        //$router->get('/job-commission', 'JobController@get_job_commissions');//QUAN
-        //$router->post('/job-commission', 'JobController@create_job_commissions');//QUAN
-        //$router->post('/job-commission/:uuid', 'JobController@update_job_commissions');//QUAN
-        //$router->get('/job-commission/:uuid', 'JobController@get_job_commissions_by_id');//QUAN
-        //$router->delete('/job-commission/:uuid', 'JobController@delete_job_commissions');//QUAN
+        //$router->get('/job-commission', 'JobController@get_job_commissions');//QUAN DONE
+        //$router->post('/job-commission', 'JobController@create_job_commissions');//QUAN DONE
+        //$router->post('/job-commission/:uuid', 'JobController@update_job_commissions');//QUAN DONE
+        //$router->get('/job-commission/:uuid', 'JobController@get_job_commissions_by_id');//QUAN DONE
+        //$router->delete('/job-commission/:uuid', 'JobController@delete_job_commissions');//QUAN DONE
 
         $router->post('/add-job-followed', 'JobController@add_job_followed');
         $router->delete('/remove-job-followed/:uuid', 'JobController@remove_job_followed');
