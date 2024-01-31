@@ -3,6 +3,9 @@
 namespace Digisource\Companies\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use Digisource\Common\Utils\Utils;
+use Digisource\Companies\Entities\Company;
+use Digisource\Core\Constant\Constant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +14,7 @@ use Digisource\Companies\Services\V1\CompaniesService;
 use Digisource\Settings\Contracts\SettingsCompanyServiceFactory;
 use Digisource\Settings\Services\V1\SettingsCompanyService;
 use Illuminate\Validation\ValidationException;
+use PHPMailer\PHPMailer\Exception;
 
 class CompaniesController extends Controller
 {
@@ -665,8 +669,28 @@ class CompaniesController extends Controller
 
     public function create_company(Request $request, Response $response)
     {
-        $data = $request->request->all();
-        $id = $this->appSession->getTool()->getId();
+        $validator = Validator::make($request->all(), [
+            'industry_id' => 'required',
+            'company_name' => 'required|max:256',
+            'source_id' => 'required',
+            'representative' => 'required|max:256',
+            'phone' => 'required|numeric|unique:companies',
+            'email' => 'required|email|unique:companies',
+            'city_id' => 'required',
+            'district_id' => 'required',
+            'ward_id' => 'required',
+            'address' => 'required|max:256',
+            //'summary' => 'max:1000',
+            'logo' => 'required|uploaded_file|max:1M|mimes:jpeg,png',
+        ]);
+
+        if ($validator->fails()) {
+            $this->validateFails(new ValidationException($validator));
+            return $this->getResponse();
+        }
+
+        $data = $request->all();
+        $user = auth()->user();
 
         $industry_id = $data['industry_id'];
         $company_name = $data['company_name'];
@@ -680,97 +704,41 @@ class CompaniesController extends Controller
         $address = $data['address'];
         $summary = $data['summary'];
 
-        $validator = new Validator;
-        $validator->setMessages([
-            'required' => ':attribute không được để trống.',
-            'min' => ':attribute tối thiểu :min ký tự.',
-            'max' => ':attribute không được quá :max .',
-            'email' => ':attribute không phải là email hợp lệ.',
-            'numeric' => ':attribute không phải là số điện thoại hợp lệ.',
-            'mimes' => ':attribute phải là hình ảnh jpeg, png.',
-            'date' => ':attribute không đúng định dạng Y-m-d .'
-        ]);
+        $new = new Company();
+        $new->id = uniqid();
+        $new->create_uid = $user->id;
+        $new->write_uid = $user->id;
+        $new->create_date = date('Y-m-d H:i:s');
+        $new->write_date = date('Y-m-d H:i:s');
+        $new->status = 0;
+        $new->company_id = $user->company_id;
+        $new->industry_id = $industry_id;
+        $new->company_name = $company_name;
+        $new->source_id = $source_id;
+        $new->representative = $representative;
+        $new->phone = $phone;
+        $new->email = $email;
+        $new->city_id = $city_id;
+        $new->district_id = $district_id;
+        $new->ward_id = $ward_id;
+        $new->address = $address;
+        $new->summary = $summary;
+        $new->save();
 
-        $validation = $validator->make($_POST + $_FILES, [
-            'industry_id' => 'required',
-            'company_name' => 'required|max:256',
-            'source_id' => 'required',
-            'representative' => 'required|max:256',
-            'phone' => 'required|numeric',
-            'email' => 'required|email',
-            'city_id' => 'required',
-            'district_id' => 'required',
-            'ward_id' => 'required',
-            'address' => 'required|max:256',
-            //'summary' => 'max:1000',
-            'logo' => 'required|uploaded_file|max:1M|mimes:jpeg,png',
-        ]);
-
-        $validation->validate();
-
-        if ($validation->fails()) {
-            $message = [
-                'status' => false,
-                'message' => $validation->errors->firstOfAll(':message', true)
-            ];
-        } else {
-            $sql = "SELECT d1.email, d1.phone FROM companies d1 WHERE d1.status=0 AND (d1.email='" . $email . "' OR d1.phone='" . $phone . "')";
-
-            $this->msg->add("query", $sql);
-
-            $result = $this->appSession->getTier()->getTable($this->msg);
-            $numrows = $result->getRowCount();
-
-            if ($numrows > 0) {
-                $row = $result->getRow(0);
-                if ($row->getString("email") != "" && $row->getString("email") == $email) {
-                    $message = [
-                        'status' => false,
-                        'message' => "Email của bạn đã tồn tại."
-                    ];
-                } else if ($row->getString("phone") != "" && $row->getString("phone") == $phone) {
-                    $message = [
-                        'status' => false,
-                        'message' => "Số điện thoại của bạn đã tồn tại."
-                    ];
-                }
-            } else {
-                $builder = $this->appSession->getTier()->createBuilder("companies");
-                $builder->add("id", $id);
-                $builder->add("create_uid", $this->session_user_id);
-                $builder->add("write_uid", $this->session_user_id);
-                $builder->add("create_date", $this->appSession->getTier()->getDateString(), 'f');
-                $builder->add("write_date", $this->appSession->getTier()->getDateString(), 'f');
-                $builder->add("status", 0);
-                $builder->add("company_id", $this->session_company_id);
-                $builder->add("industry_id", str_replace("'", "''", $industry_id));
-                $builder->add("company_name", str_replace("'", "''", $company_name));
-                $builder->add("source_id", str_replace("'", "''", $source_id));
-                $builder->add("representative", str_replace("'", "''", $representative));
-                $builder->add("phone", str_replace("'", "''", $phone));
-                $builder->add("email", str_replace("'", "''", $email));
-                $builder->add("city_id", str_replace("'", "''", $city_id));
-                $builder->add("district_id", str_replace("'", "''", $district_id));
-                $builder->add("ward_id", str_replace("'", "''", $ward_id));
-                $builder->add("address", str_replace("'", "''", $address));
-                $builder->add("summary", str_replace("'", "''", $summary));
-                $sql = $this->appSession->getTier()->getInsert($builder);
-                $this->msg->add("query", $sql);
-                $result =  $this->appSession->getTier()->exec($this->msg);
-                $logo_id = $this->create_document_company($request, $id);
-
-                if ($result == '1') {
-                    $data = $this->get_company_by_id($id, $response);
-                    $message = json_decode($data->getContent());
-                } else {
-                    $message = [
-                        'status' => false,
-                        'message' => "Tạo company thất bại."
-                    ];
-                }
+        if ($request->hasFile('logo')) {
+            $logo_id = Utils::updateFile($request->logo, Constant::FILE_LOGO, $new->id, $user->company_id);
+            if ($logo_id instanceof Exception) {
+                return [
+                    'status' => false,
+                    'message' => __("Lỗi cập nhật ảnh")
+                ];
             }
         }
-        return $this->appSession->getTier()->response($message, $response);
+
+        $data = $this->get_company_by_id($new->id);
+        $this->addData(['company_id' => $data]);
+
+        return $this->getResponse();
     }
 
     public function update_company($id, Request $request, Response $response)
@@ -867,7 +835,7 @@ class CompaniesController extends Controller
         return $this->appSession->getTier()->response($message, $response);
     }
 
-    public function get_company_by_id($id, Response $response)
+    public function get_company_by_id($id)
     {
         $sql = "SELECT d1.id, d1.industry_id, d1.company_name, d1.source_id, d1.representative, d1.phone, d1.email";
         $sql = $sql . ", d1.city_id, d1.district_id, d1.ward_id, d1.address, d1.summary";
@@ -885,18 +853,12 @@ class CompaniesController extends Controller
         $sql = $sql . " WHERE d1.id='" . $id . "' AND d1.status=0";
         $sql = $sql . " ORDER BY d1.create_date ASC";
 
-        $this->msg->add("query", $sql);
+        $results = DB::select($sql);
+        $arr = array();
 
+        if (!empty($results)) {
+            $row = $results[0];
 
-        $result =  $this->appSession->getTier()->getTable($this->msg);
-        $numrows = $result->getRowCount();
-
-        if ($numrows > 0) {
-
-            $row = $result->getRow(0);
-
-
-            $arr = array();
             $arr_industry = array();
             $arr_source = array();
             $arr_city = array();
@@ -904,41 +866,41 @@ class CompaniesController extends Controller
             $arr_ward = array();
             $arr_user_followed = array();
 
-            $arr['id'] = $row->getString("id");
-            $arr['industry_id'] = $row->getString("industry_id");
-            $arr['company_name'] = $row->getString("company_name");
-            $arr['source_id'] = $row->getString("source_id");
-            $arr['representative'] = $row->getString("representative");
-            $arr['phone'] = $row->getString("phone");
-            $arr['email'] = $row->getString("email");
-            $arr['city_id'] = $row->getString("city_id");
-            $arr['district_id'] = $row->getString("district_id");
-            $arr['ward_id'] = $row->getString("ward_id");
-            $arr['address'] = $row->getString("address");
-            $arr['summary'] = $row->getString("summary");
+            $arr['id'] = $row->id;
+            $arr['industry_id'] = $row->industry_id;
+            $arr['company_name'] = $row->company_name;
+            $arr['source_id'] = $row->source_id;
+            $arr['representative'] = $row->representative;
+            $arr['phone'] = $row->phone;
+            $arr['email'] = $row->email;
+            $arr['city_id'] = $row->city_id;
+            $arr['district_id'] = $row->district_id;
+            $arr['ward_id'] = $row->ward_id;
+            $arr['address'] = $row->address;
+            $arr['summary'] = $row->summary;
 
-            $arr_industry['id'] = $row->getString("industry_id");
-            $arr_industry['name'] = $row->getString("industry_name");
+            $arr_industry['id'] = $row->industry_id;
+            $arr_industry['name'] = $row->industry_name;
             $arr['industries'] = $arr_industry;
 
-            $arr_source['id'] = $row->getString("source_id");
-            $arr_source['name'] = $row->getString("source_name");
+            $arr_source['id'] = $row->source_id;
+            $arr_source['name'] = $row->source_name;
             $arr['source'] = $arr_source;
 
-            $arr_city['id'] = $row->getString("city_id");
-            $arr_city['name'] = $row->getString("city_name");
+            $arr_city['id'] = $row->city_id;
+            $arr_city['name'] = $row->city_name;
             $arr['city'] = $arr_city;
 
-            $arr_district['id'] = $row->getString("district_id");
-            $arr_district['name'] = $row->getString("district_name");
+            $arr_district['id'] = $row->district_id;
+            $arr_district['name'] = $row->district_name;
             $arr['district'] = $arr_district;
 
-            $arr_ward['id'] = $row->getString("ward_id");
-            $arr_ward['name'] = $row->getString("ward_name");
+            $arr_ward['id'] = $row->ward_id;
+            $arr_ward['name'] = $row->ward_name;
             $arr['ward'] = $arr_ward;
 
-            $arr['logo_id'] = $row->getString("logo_id");
-            $arr['followed_id'] = $row->getString("followed_id");
+            $arr['logo_id'] = $row->logo_id;
+            $arr['followed_id'] = $row->followed_id;
 
             $sql = "SELECT d1.id, d3.user_name, d1.id AS avatar_id, d3.id AS user_id FROM company_followed_companies d1";
             $sql = $sql . " LEFT OUTER JOIN company_followed d2 ON(d1.followed_id = d2.id)";
@@ -946,34 +908,15 @@ class CompaniesController extends Controller
             $sql = $sql . " LEFT OUTER JOIN document d4 ON(d3.id = d4.rel_id AND d4.document_type_rel='avatar')";
             $sql = $sql . " WHERE d1.companies_id='" . $arr['id'] . "' AND d1.status=0";
             $sql = $sql . " ORDER BY d1.write_date ASC";
-            $this->msg->add("query", $sql);
-            $result_followed = $this->appSession->getTier()->getArray($this->msg);
 
-            for ($j = 0; $j < count($result_followed); $j++) {
-                $arr_followed = array();
-                $arr_followed['id'] = $result_followed[$j][0];
-                $arr_followed['user_id'] = $result_followed[$j][3];
-                $arr_followed['user_name'] = $result_followed[$j][1];
-                $arr_followed['avatar_id'] = $result_followed[$j][2];
-                $arr_user_followed[] = $arr_followed;
-            }
+            $arr_user_followed = DB::select($sql);
 
             $arr['user_followed'] = $arr_user_followed;
 
-            $data[] = $arr;
-
-            $message = [
-                'status' => true,
-                'data' => ['company' => $arr],
-                'message' => "Lấy company by id thành công."
-            ];
-        } else {
-            $message = [
-                'status' => false,
-                'message' => "Cpmpany không tồn tại."
-            ];
         }
-        return $this->appSession->getTier()->response($message, $response);
+
+        return $arr;
+
     }
 
     public function delete_company($id, Response $response)
@@ -1357,14 +1300,14 @@ class CompaniesController extends Controller
 
             $arr = array();
 
-            $arr['id'] = $row->getString("id");
-            $arr['invoice_no'] = $row->getString("invoice_no");
-            $arr['invoice_date'] = $row->getString("invoice_date");
-            $arr['amount'] = $row->getString("amount");
-            $arr['description'] = $row->getString("description");
-            $arr['companies_id'] = $row->getString("companies_id");
-            $arr['invoice_id'] = $row->getString("invoice_id");
-            $arr['link_download_invoice'] = URL . "document/?id=" . $row->getString("invoice_id") . "";
+            $arr['id'] = $row->id;
+            $arr['invoice_no'] = $row->invoice_no;
+            $arr['invoice_date'] = $row->invoice_date;
+            $arr['amount'] = $row->amount;
+            $arr['description'] = $row->description;
+            $arr['companies_id'] = $row->companies_id;
+            $arr['invoice_id'] = $row->invoice_id;
+            $arr['link_download_invoice'] = URL . "document/?id=" . $row->invoice_id. "";
             $data[] = $arr;
 
             $message = [

@@ -1,8 +1,5 @@
 <?php
 
-use Digisource\Settings\Http\Controllers\V1\SettingsCandidateController;
-use Digisource\Settings\Http\Controllers\V1\SettingsLocationsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
