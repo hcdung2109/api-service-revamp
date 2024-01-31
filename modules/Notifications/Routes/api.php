@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Digisource\Notifications\Http\Controllers\V1\NotificationsController;
 
 /*
     |--------------------------------------------------------------------------
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Route;
     |
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->name('api.')->group(function () {
-    Route::get('notifications', fn (Request $request) => $request->user())->name('notifications');
+$middlewares = ['api'];
+
+Route::group([
+    'middleware' => $middlewares,
+    'prefix' => 'v1/notifications'
+], function ($router) {
+    $router->get('/notification', [NotificationsController::class, 'get_notification_list']); // QUAN
+    $router->get('/notification/{uuid}', [NotificationsController::class, 'get_notification_detail']); // QUAN
+    $router->get('/notification-seen/{uuid}', [NotificationsController::class, 'post_notification_seen']); // QUAN
 });

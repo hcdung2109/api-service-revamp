@@ -1,6 +1,6 @@
 <?php
 
-namespace Digisource\Jobs\Providers;
+namespace Digisource\Career\Providers;
 
 use Digisource\Core\Providers\BaseServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -10,8 +10,9 @@ class RouteServiceProvider extends BaseServiceProvider
     /**
      * The module namespace to assume when generating URLs to actions.
      */
-    protected string $moduleNamespace = 'Digisource\Jobs\Http\Controllers';
-    protected $moduleNameLower = 'jobs';
+    protected string $moduleNamespace = 'Digisource\Career\Http\Controllers';
+    protected $moduleNameLower = 'career';
+
 
     /**
      * Called before routes are registered.
@@ -30,23 +31,32 @@ class RouteServiceProvider extends BaseServiceProvider
     {
         $this->mapApiRoutes();
 
-//        $this->mapWebRoutes();
+        // $this->mapWebRoutes();
     }
 
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     */
+    protected function mapWebRoutes(): void
+    {
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
+            ->group(module_path('Career', '/Routes/web.php'));
+    }
 
     /**
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
-     *
-     * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(): void
     {
         Route::group(
             $this->getGroupPrefix(),
             function ($router) {
-                require module_path('Jobs', '/Routes/api.php');
+                require module_path('Career', '/Routes/api.php');
             }
         );
     }

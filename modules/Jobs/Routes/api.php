@@ -57,5 +57,11 @@ Route::group(
         $router->post('/job-commission/{uuid}', 'JobsController@update_job_commissions');//QUAN
         $router->get('/job-commission/{uuid}', 'JobsController@get_job_commissions_by_id');//QUAN
         $router->delete('/job-commission/{uuid}', 'JobsController@delete_job_commissions');//QUAN
+
+        $router->get('/job-hiring-team', 'JobsController@get_job_hiring_team');//QUAN
+        $router->post('/job-hiring-team', 'JobsController@create_job_hiring_team');//QUAN
+        $router->post('/job-hiring-team/{uuid}', 'JobsController@update_job_hiring_team');//QUAN
+        $router->get('/job-hiring-team/{uuid}', 'JobsController@get_job_hiring_team_by_id');//QUAN
+        $router->delete('/job-hiring-team/{uuid}', 'JobsController@delete_job_hiring_team');//QUAN
     }
 );

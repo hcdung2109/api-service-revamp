@@ -41,15 +41,15 @@ class JobsController extends Controller
     public function create_job_group(Request $request)
     {
         $user = auth()->user();
+        $requestData = $request->all();
 
-        $data = $request->all();
-
-        $validator = Validator::make($data, [
-            'rel_id' => 'required',
-            'name' => 'required|max:256',
+        $validator = Validator::make($requestData, [
+            'job_id' => 'required',
+            'job_group_id' => 'required',
+            'user_id' => 'required',
         ], [
             'required' => ':attribute không được để trống.',
-            'max' => ':attribute không được quá :max.',
+            'max' => ':attribute không được quá :max .',
         ]);
 
         if ($validator->fails()) {
@@ -58,31 +58,46 @@ class JobsController extends Controller
                 'message' => $validator->errors()->first(),
             ];
         } else {
-            $id = DB::table('job_group')->insertGetId([
-                'id' => uniqid(),
-                'create_uid' => $user->id,
-                'write_uid' => $user->id,
-                'create_date' => date('Y-m-d H:i:s'),
-                'write_date' => date('Y-m-d H:i:s'),
-                'status' => 0,
-                'company_id' => $user->company_id,
-                'name' => $data['name'],
-                'job_id' => $data['rel_id'],
-            ]);
+            $job_id = $requestData['job_id'];
+            $job_group_id = $requestData['job_group_id'];
+            $user_id = $requestData['user_id'];
 
-            if ($id) {
-                $message = [
-                    'status' => true,
-                    'message' => "Tạo job group thành công."
-                ];
-            } else {
+            $seen_id = DB::table('jobs')
+                ->where('status', 0)
+                ->where('id', $job_id)
+                ->value('id');
+
+            if (!$seen_id) {
                 $message = [
                     'status' => false,
-                    'message' => "Tạo job group note thất bại."
+                    'message' => "Job của bạn không tồn tại."
                 ];
+            } else {
+                $id = DB::table('job_hiring_teams')->insertGetId([
+                    'create_uid' => $user->id,
+                    'write_uid' => $user->id,
+                    'create_date' => date('Y-m-d H:i:s'),
+                    'write_date' => date('Y-m-d H:i:s'),
+                    'status' => 0,
+                    'company_id' => $user->company_id,
+                    'job_id' => $job_id,
+                    'job_group_id' => $job_group_id,
+                    'user_id' => $user_id,
+                ]);
+
+                if ($id) {
+                    $message = [
+                        'status' => true,
+                        'message' => "Tạo job hiring team thành công"
+                    ];
+                } else {
+                    $message = [
+                        'status' => false,
+                        'message' => "Tạo job hiring team thất bại."
+                    ];
+                }
             }
         }
-
 
         $this->addData($message);
 
@@ -1486,6 +1501,286 @@ class JobsController extends Controller
             $message = [
                 'status' => true,
                 'message' => "Xóa job commissions thành công."
+            ];
+        }
+
+        $this->addData($message);
+
+        return $this->getResponse();
+    }
+
+    //
+    public function get_job_hiring_team(Request $request)
+    {
+        $user = auth()->user();
+        $requestData = $request->all();
+
+        $validator = Validator::make($requestData, [
+            'job_id' => 'required',
+        ], [
+            'required' => ':attribute không được để trống.',
+            'max' => ':attribute không được quá :max .',
+        ]);
+
+        if ($validator->fails()) {
+            $message = [
+                'status' => false,
+                'message' => $validator->errors()->first(),
+            ];
+            $this->addData($message);
+
+            return $this->getResponse();
+        }
+
+        $id = $requestData['job_id'];
+
+        $result = DB::table('job_hiring_teams as d1')
+            ->leftJoin('job_group as d2', 'd1.job_group_id', '=', 'd2.id')
+            ->leftJoin('res_user as d3', 'd1.user_id', '=', 'd3.id')
+            ->leftJoin('res_user_company as d4', 'd3.id', '=', 'd4.user_id')
+            ->leftJoin('res_company as d5', 'd5.id', '=', 'd4.company_id')
+            ->leftJoin('res_user_group as d6', 'd6.id', '=', 'd4.group_id')
+            ->leftJoin('document as d7', function ($join) {
+                $join->on('d3.id', '=', 'd7.rel_id')->where('d7.document_type_rel', '=', 'avatar');
+            })
+            ->select(
+                'd1.id',
+                'd2.name AS job_role_name',
+                'd3.name AS user_name',
+                'd7.id AS avatar_id',
+                'd5.id AS department_id',
+                'd5.name AS department_name',
+                'd6.id AS user_group_id',
+                'd6.name AS group_name'
+            )
+            ->where('d1.job_id', $id)
+            ->where('d1.company_id', $user->company_id)
+            ->where('d1.status', 0)
+            ->get();
+
+        $data = [];
+        foreach ($result as $item) {
+            $arr = [
+                'id' => $item->id,
+                'job_role_name' => $item->job_role_name,
+                'user_name' => $item->user_name,
+                'avatar_id' => $item->avatar_id,
+                'department_id' => $item->department_id,
+                'department_name' => $item->department_name,
+                'group_id' => $item->user_group_id,
+                'group_name' => $item->group_name,
+            ];
+            $data[] = $arr;
+        }
+
+        $message = [
+            'status' => true,
+            'data' => ['job_hiring_teams' => $data],
+            'message' => "Lấy danh sách job hiring teams thành công."
+        ];
+
+        $this->addData($message);
+
+        return $this->getResponse();
+    }
+
+    public function create_job_hiring_team(Request $request)
+    {
+        $user = auth()->user();
+        $requestData = $request->all();
+
+        $validator = Validator::make($requestData, [
+            'job_id' => 'required',
+            'job_group_id' => 'required',
+            'user_id' => 'required',
+        ], [
+            'required' => ':attribute không được để trống.',
+            'max' => ':attribute không được quá :max .',
+        ]);
+
+        if ($validator->fails()) {
+            $message = [
+                'status' => false,
+                'message' => $validator->errors()->first(),
+            ];
+        } else {
+            $job_id = $requestData['job_id'];
+            $job_group_id = $requestData['job_group_id'];
+            $user_id = $requestData['user_id'];
+
+            $seen_id = DB::table('jobs')
+                ->where('status', 0)
+                ->where('id', $job_id)
+                ->value('id');
+
+            if (!$seen_id) {
+                $message = [
+                    'status' => false,
+                    'message' => "Job của bạn không tồn tại."
+                ];
+            } else {
+                $id = DB::table('job_hiring_teams')->insertGetId([
+                    'id' => uniqid(),
+                    'create_uid' => $user->id,
+                    'write_uid' => $user->id,
+                    'create_date' => date('Y-m-d H:i:s'),
+                    'write_date' => date('Y-m-d H:i:s'),
+                    'status' => 0,
+                    'company_id' => $user->company_id,
+                    'job_id' => $job_id,
+                    'job_group_id' => $job_group_id,
+                    'user_id' => $user_id,
+                ]);
+
+                if ($id) {
+                    $message = [
+                        'status' => true,
+                        'message' => "Tạo job hiring team thành công"
+                    ];
+                } else {
+                    $message = [
+                        'status' => false,
+                        'message' => "Tạo job hiring team thất bại."
+                    ];
+                }
+            }
+        }
+
+        $this->addData($message);
+
+        return $this->getResponse();
+    }
+
+    public function update_job_hiring_team(Request $request, $id)
+    {
+        $user = auth()->user();
+        $requestData = $request->all();
+
+        $validator = Validator::make($requestData, [
+            'job_group_id' => 'required',
+            'user_id' => 'required',
+        ], [
+            'required' => ':attribute không được để trống.',
+            'max' => ':attribute không được quá :max .',
+        ]);
+
+        $validator->validate();
+
+        if ($validator->fails()) {
+            $message = [
+                'status' => false,
+                'message' => $validator->errors()->first(),
+            ];
+        } else {
+            $job_group_id = $requestData['job_group_id'];
+            $user_id = $requestData['user_id'];
+
+            $seen_id = DB::table('job_hiring_teams')
+                ->where('status', 0)
+                ->where('id', $id)
+                ->value('id');
+
+            if (!$seen_id) {
+                $message = [
+                    'status' => true,
+                    'message' => "Job hiring team không tồn tại."
+                ];
+            } else {
+                DB::table('job_hiring_teams')
+                    ->where('id', $id)
+                    ->update([
+                        'write_uid' => $user->id,
+                        'write_date' => date('Y-m-d H:i:s'),
+                        'company_id' => $user->company_id,
+                        'job_group_id' => $job_group_id,
+                        'user_id' => $user_id,
+                    ]);
+
+                $message = [
+                    'status' => true,
+                    'message' => "Cập nhật job hiring team thành công"
+                ];
+            }
+        }
+
+        $this->addData($message);
+        return $this->getResponse();
+    }
+
+    public function get_job_hiring_team_by_id(Request $request, $id)
+    {
+        $user = auth()->user();
+
+        $seen_id = DB::table('job_hiring_teams')
+            ->where('status', 0)
+            ->where('id', $id)
+            ->value('id');
+
+        if (!$seen_id) {
+            $message = [
+                'status' => true,
+                'message' => "Job inhiring không tồn tại."
+            ];
+        } else {
+            $result = DB::table('job_hiring_teams as d1')
+                ->select('d1.id', 'd2.name AS job_role_name', 'd3.name AS user_name', 'd7.id AS avatar_id', 'd5.id AS department_id', 'd5.name AS department_name', 'd6.id AS user_group_id', 'd6.name AS group_name')
+                ->leftJoin('job_group as d2', 'd1.job_group_id', '=', 'd2.id')
+                ->leftJoin('res_user as d3', 'd1.user_id', '=', 'd3.id')
+                ->leftJoin('res_user_company as d4', 'd3.id', '=', 'd4.user_id')
+                ->leftJoin('res_company as d5', 'd5.id', '=', 'd4.company_id')
+                ->leftJoin('res_user_group as d6', 'd6.id', '=', 'd4.group_id')
+                ->leftJoin('document as d7', function ($join) {
+                    $join->on('d3.id', '=', 'd7.rel_id')->where('d7.document_type_rel', '=', 'avatar');
+                })
+                ->where('d1.id', $id)
+                ->where('d1.status', 0)
+                ->first();
+
+            $data = [
+                'id' => $result->id,
+                'job_role_name' => $result->job_role_name,
+                'user_name' => $result->user_name,
+                'avatar_id' => $result->avatar_id,
+                'department_id' => $result->department_id,
+                'department_name' => $result->department_name,
+                'group_id' => $result->user_group_id,
+                'group_name' => $result->group_name,
+            ];
+
+            $message = [
+                'status' => true,
+                'data' => ['job_inhiring_teams' => $data],
+                'message' => "Lấy job inhiring team by id thành công."
+            ];
+        }
+
+        $this->addData($message);
+
+        return $this->getResponse();
+    }
+
+    public function delete_job_hiring_team(Request $request, $id)
+    {
+        $user = auth()->user();
+
+        $seen_id = DB::table('job_hiring_teams')
+            ->where('status', 0)
+            ->where('id', $id)
+            ->value('id');
+
+        if (!$seen_id) {
+            $message = [
+                'status' => true,
+                'message' => "Job hiring team không tồn tại."
+            ];
+        } else {
+            DB::table('job_hiring_teams')
+                ->where('id', $id)
+                ->update(['status' => 1]);
+
+            $message = [
+                'status' => true,
+                'message' => "Xóa job hiring team thành công."
             ];
         }
 

@@ -673,105 +673,105 @@ class CareerSiteController extends Controller
 
     // // START SOCIAL
 
-    // public function get_social(Request $request, Response $response)
-    // {
-    //     $param = $request->query->all();
+    public function get_social(Request $request, Response $response)
+    {
+        $param = $request->query->all();
 
-    //     $career_site_id = $param['career_site_id'];
+        $career_site_id = $param['career_site_id'];
 
-    //     $sql = "SELECT d1.id, d1.career_site_id, d1.active, d1.url, d1.icons";
-    //     $sql = $sql . " FROM career_site_socials d1";
-    //     $sql = $sql . " WHERE d1.company_id='" . $this->session_company_id . "' AND d1.status=0";
-    //     $sql = $sql . " AND d1.career_site_id='" . $career_site_id . "'";
+        $sql = "SELECT d1.id, d1.career_site_id, d1.active, d1.url, d1.icons";
+        $sql = $sql . " FROM career_site_socials d1";
+        $sql = $sql . " WHERE d1.company_id='" . $this->session_company_id . "' AND d1.status=0";
+        $sql = $sql . " AND d1.career_site_id='" . $career_site_id . "'";
 
-    //     $this->msg->add("query", $sql);
-    //     $result = $this->appSession->getTier()->getArray($this->msg);
-    //     $data = array();
-    //     for ($i = 0; $i < count($result); $i++) {
-    //         $arr = array();
+        $this->msg->add("query", $sql);
+        $result = $this->appSession->getTier()->getArray($this->msg);
+        $data = array();
+        for ($i = 0; $i < count($result); $i++) {
+            $arr = array();
 
-    //         $arr['id'] = $result[$i][0];
-    //         $arr['career_site_id'] = $result[$i][1];
-    //         $arr['active'] = $result[$i][2];
-    //         $arr['url'] = $result[$i][3];
-    //         $arr['icons'] = $result[$i][4];
+            $arr['id'] = $result[$i][0];
+            $arr['career_site_id'] = $result[$i][1];
+            $arr['active'] = $result[$i][2];
+            $arr['url'] = $result[$i][3];
+            $arr['icons'] = $result[$i][4];
 
-    //         $data[] = $arr;
-    //     }
+            $data[] = $arr;
+        }
 
-    //     $message = [
-    //         'status' => true,
-    //         'data' => ['career_site_socials' => $data],
-    //         'message' => "Lấy danh sách career site socials thành công."
-    //     ];
+        $message = [
+            'status' => true,
+            'data' => ['career_site_socials' => $data],
+            'message' => "Lấy danh sách career site socials thành công."
+        ];
 
-    //     return $this->appSession->getTier()->response($message, $response);
-    // }
+        return $this->appSession->getTier()->response($message, $response);
+    }
 
-    // public function create_social(Request $request, Response $response)
-    // {
-    //     $data = $request->request->all();
-    //     $career_site_id = $data['career_site_id'];
-    //     $active = $data['active'];
-    //     $url = $data['url'];
-    //     $icons = $data['icons'];
-
-
-    //     $validator = new Validator;
-    //     $validator->setMessages([
-    //         'required' => ':attribute không được để trống.',
-    //         'max' => ':attribute không được quá :max .',
-    //     ]);
-
-    //     $validation = $validator->make($_POST + $_FILES, [
-    //         'career_site_id' => 'required',
-    //         'active' => 'required',
-    //         'url' => 'required|max:1000',
-    //         'icons' => 'required|max:1000',
-    //     ]);
-
-    //     $validation->validate();
-
-    //     if ($validation->fails()) {
-    //         $message = [
-    //             'status' => false,
-    //             'message' => $validation->errors->firstOfAll(':message', true)
-    //         ];
-    //     } else {
-    //         $builder = $this->appSession->getTier()->createBuilder("career_site_socials");
-    //         $id = $this->appSession->getTool()->getId();
-    //         $builder->add("id", $id);
-    //         $builder->add("create_uid", $this->session_user_id);
-    //         $builder->add("write_uid", $this->session_user_id);
-    //         $builder->add("create_date", $this->appSession->getTier()->getDateString(), 'f');
-    //         $builder->add("write_date", $this->appSession->getTier()->getDateString(), 'f');
-    //         $builder->add("status", 0);
-    //         $builder->add("company_id", $this->session_company_id);
-    //         $builder->add("career_site_id", str_replace("'", "''", $career_site_id));
-    //         $builder->add("active", str_replace("'", "''", $active));
-    //         $builder->add("url", str_replace("'", "''", $url));
-    //         $builder->add("icons", str_replace("'", "''", $icons));
+    public function create_social(Request $request, Response $response)
+    {
+        $data = $request->request->all();
+        $career_site_id = $data['career_site_id'];
+        $active = $data['active'];
+        $url = $data['url'];
+        $icons = $data['icons'];
 
 
-    //         $sql = $this->appSession->getTier()->getInsert($builder);
-    //         $this->msg->add("query", $sql);
-    //         $result =  $this->appSession->getTier()->exec($this->msg);
+        $validator = new Validator;
+        $validator->setMessages([
+            'required' => ':attribute không được để trống.',
+            'max' => ':attribute không được quá :max .',
+        ]);
 
-    //         if ($result == '1') {
-    //             $message = [
-    //                 'status' => true,
-    //                 'message' => "Tạo career site social thành công."
-    //             ];
-    //         } else {
-    //             $message = [
-    //                 'status' => false,
-    //                 'message' => "Tạo career social thất bại."
-    //             ];
-    //         }
-    //     }
+        $validation = $validator->make($_POST + $_FILES, [
+            'career_site_id' => 'required',
+            'active' => 'required',
+            'url' => 'required|max:1000',
+            'icons' => 'required|max:1000',
+        ]);
 
-    //     return $this->appSession->getTier()->response($message, $response);
-    // }
+        $validation->validate();
+
+        if ($validation->fails()) {
+            $message = [
+                'status' => false,
+                'message' => $validation->errors->firstOfAll(':message', true)
+            ];
+        } else {
+            $builder = $this->appSession->getTier()->createBuilder("career_site_socials");
+            $id = $this->appSession->getTool()->getId();
+            $builder->add("id", $id);
+            $builder->add("create_uid", $this->session_user_id);
+            $builder->add("write_uid", $this->session_user_id);
+            $builder->add("create_date", $this->appSession->getTier()->getDateString(), 'f');
+            $builder->add("write_date", $this->appSession->getTier()->getDateString(), 'f');
+            $builder->add("status", 0);
+            $builder->add("company_id", $this->session_company_id);
+            $builder->add("career_site_id", str_replace("'", "''", $career_site_id));
+            $builder->add("active", str_replace("'", "''", $active));
+            $builder->add("url", str_replace("'", "''", $url));
+            $builder->add("icons", str_replace("'", "''", $icons));
+
+
+            $sql = $this->appSession->getTier()->getInsert($builder);
+            $this->msg->add("query", $sql);
+            $result =  $this->appSession->getTier()->exec($this->msg);
+
+            if ($result == '1') {
+                $message = [
+                    'status' => true,
+                    'message' => "Tạo career site social thành công."
+                ];
+            } else {
+                $message = [
+                    'status' => false,
+                    'message' => "Tạo career social thất bại."
+                ];
+            }
+        }
+
+        return $this->appSession->getTier()->response($message, $response);
+    }
 
     public function update_social($id, Request $request, Response $response)
     {
@@ -838,70 +838,70 @@ class CareerSiteController extends Controller
         return $this->appSession->getTier()->response($message, $response);
     }
 
-    // public function get_social_by_id($id, Response $response)
-    // {
-    //     $sql = "SELECT d1.id, d1.career_site_id, d1.active, d1.url, d1.icons";
-    //     $sql = $sql . " FROM career_site_socials d1";
-    //     $sql = $sql . " WHERE d1.company_id='" . $this->session_company_id . "' AND d1.status=0";
-    //     $sql = $sql . " AND d1.id='" . $id . "'";
+    public function get_social_by_id($id, Response $response)
+    {
+        $sql = "SELECT d1.id, d1.career_site_id, d1.active, d1.url, d1.icons";
+        $sql = $sql . " FROM career_site_socials d1";
+        $sql = $sql . " WHERE d1.company_id='" . $this->session_company_id . "' AND d1.status=0";
+        $sql = $sql . " AND d1.id='" . $id . "'";
 
-    //     $this->msg->add("query", $sql);
+        $this->msg->add("query", $sql);
 
-    //     $result =  $this->appSession->getTier()->getTable($this->msg);
-    //     $numrows = $result->getRowCount();
+        $result =  $this->appSession->getTier()->getTable($this->msg);
+        $numrows = $result->getRowCount();
 
-    //     if ($numrows > 0) {
-    //         $row = $result->getRow(0);
-    //         $arr = array();
+        if ($numrows > 0) {
+            $row = $result->getRow(0);
+            $arr = array();
 
-    //         $arr['id'] = $row->getString("id");
-    //         $arr['career_site_id'] = $row->getString("career_site_id");
-    //         $arr['active'] = $row->getString("active");
-    //         $arr['url'] = $row->getString("url");
-    //         $arr['icons'] = $row->getString("icons");
+            $arr['id'] = $row->getString("id");
+            $arr['career_site_id'] = $row->getString("career_site_id");
+            $arr['active'] = $row->getString("active");
+            $arr['url'] = $row->getString("url");
+            $arr['icons'] = $row->getString("icons");
 
-    //         $message = [
-    //             'status' => true,
-    //             'data' => ['career_site_social' => $arr],
-    //             'message' => "Lấy career site social by id thành công."
-    //         ];
-    //     } else {
-    //         $message = [
-    //             'status' => false,
-    //             'message' => "Career site social không tồn tại."
-    //         ];
-    //     }
+            $message = [
+                'status' => true,
+                'data' => ['career_site_social' => $arr],
+                'message' => "Lấy career site social by id thành công."
+            ];
+        } else {
+            $message = [
+                'status' => false,
+                'message' => "Career site social không tồn tại."
+            ];
+        }
 
-    //     return $this->appSession->getTier()->response($message, $response);
-    // }
+        return $this->appSession->getTier()->response($message, $response);
+    }
 
-    // public function delete_social($id, Response $response)
-    // {
-    //     $message = [];
+    public function delete_social($id, Response $response)
+    {
+        $message = [];
 
-    //     $sql = "SELECT d1.id FROM career_site_socials d1 WHERE d1.status = 0 AND d1.id='" . $id . "'";
-    //     $this->msg->add("query", $sql);
-    //     $seen_id = $this->appSession->getTier()->getValue($this->msg);
+        $sql = "SELECT d1.id FROM career_site_socials d1 WHERE d1.status = 0 AND d1.id='" . $id . "'";
+        $this->msg->add("query", $sql);
+        $seen_id = $this->appSession->getTier()->getValue($this->msg);
 
-    //     if ($seen_id == "") {
-    //         $message = [
-    //             'status' => true,
-    //             'message' => "Career sites social không tồn tại."
-    //         ];
-    //     } else {
-    //         $builder = $this->appSession->getTier()->getBuilder("career_site_socials");
-    //         $builder->add("id", $id);
-    //         $builder->add("status", 1);
+        if ($seen_id == "") {
+            $message = [
+                'status' => true,
+                'message' => "Career sites social không tồn tại."
+            ];
+        } else {
+            $builder = $this->appSession->getTier()->getBuilder("career_site_socials");
+            $builder->add("id", $id);
+            $builder->add("status", 1);
 
-    //         $sql = $this->appSession->getTier()->getUpdate($builder);
-    //         $this->msg->add("query", $sql);
-    //         $result = $this->appSession->getTier()->exec($this->msg);
+            $sql = $this->appSession->getTier()->getUpdate($builder);
+            $this->msg->add("query", $sql);
+            $result = $this->appSession->getTier()->exec($this->msg);
 
-    //         $message = [
-    //             'status' => true,
-    //             'message' => "Xóa career site social thành công."
-    //         ];
-    //     }
-    //     return $this->appSession->getTier()->response($message, $response);
-    // }
+            $message = [
+                'status' => true,
+                'message' => "Xóa career site social thành công."
+            ];
+        }
+        return $this->appSession->getTier()->response($message, $response);
+    }
 }
