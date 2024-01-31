@@ -1,9 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-=======
-use Digisource\Settings\Http\Controllers\V1\SettingsCandidateController;
-use Digisource\Settings\Http\Controllers\V1\SettingsLocationsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +14,6 @@ use Illuminate\Support\Facades\Route;
     |
 */
 
->>>>>>> c56245a (up)
+// Route::middleware(['auth:sanctum'])->prefix('v1')->name('api.')->group(function () {
+//     Route::get('career', fn (Request $request) => $request->user())->name('career');
+// });

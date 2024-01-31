@@ -2,118 +2,100 @@
 
 namespace Digisource\Notifications\Providers;
 
-use Digisource\Companies\Providers\RouteServiceProvider;
-use Digisource\Core\Providers\BaseServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class NotificationsServiceProvider extends BaseServiceProvider
+class NotificationsServiceProvider extends ServiceProvider
 {
-    protected $moduleName = 'Notifications';
+    protected string $moduleName = 'Notifications';
 
     protected string $moduleNameLower = 'notifications';
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->app->register(RouteServiceProvider::class);
-//        $this->app->register(RepositoryServiceProvider::class);
-//        $this->app->register(EventServiceProvider::class);
+        $this->registerCommands();
+        $this->registerCommandSchedules();
+        $this->registerTranslations();
+        $this->registerConfig();
+        $this->registerViews();
+        $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
     }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->registerConfig();
-        $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-        $this->registerRepositories();
-        $this->registerCommands();
-        $this->registerCron();
+        $this->app->register(RouteServiceProvider::class);
+    }
+
+    /**
+     * Register commands in the format of Command::class
+     */
+    protected function registerCommands(): void
+    {
+        // $this->commands([]);
+    }
+
+    /**
+     * Register command Schedules.
+     */
+    protected function registerCommandSchedules(): void
+    {
+        // $this->app->booted(function () {
+        //     $schedule = $this->app->make(Schedule::class);
+        //     $schedule->command('inspire')->hourly();
+        // });
+    }
+
+    /**
+     * Register translations.
+     */
+    public function registerTranslations(): void
+    {
+        $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
+
+        if (is_dir($langPath)) {
+            $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom($langPath);
+        } else {
+            $this->loadTranslationsFrom(module_path($this->moduleName, 'Resources/lang'), $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'Resources/lang'));
+        }
     }
 
     /**
      * Register config.
-     *
-     * @return void
      */
-    protected function registerConfig()
+    protected function registerConfig(): void
     {
-        $this->publishes(
-            [
-                module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
-            ],
-            'config'
-        );
-
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
-        );
-    }
-
-    protected function registerRepositories()
-    {
-        $bindingsVersion = config($this->moduleNameLower . '.repository.contractBindings', false);
-        if ($bindingsVersion) {
-            $default = $bindingsVersion['default'] ?? '';
-            $version = $this->getVersion();
-            $bindingsDefault = $bindingsVersion[$default];
-            if (!Arr::has($bindingsVersion, $version)) {
-                $version = $default;
-            }
-            $bindings = $bindingsVersion[$version];
-            $bindings = array_merge($bindingsDefault, $bindings);
-            // bind contact to real class
-            foreach ($bindings as $contract => $class) {
-                $this->app->bind($contract, $class);
-            }
-        }
+        $this->publishes([module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower.'.php')], 'config');
+        $this->mergeConfigFrom(module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower);
     }
 
     /**
-     * PRIVATE Method
+     * Register views.
      */
-    private function registerCommands()
+    public function registerViews(): void
     {
-        $this->commands(
-            [
-                //batch commands
-//                PruneBatchesCommand::class
-            ]
-        );
-    }
+        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
+        $sourcePath = module_path($this->moduleName, 'Resources/views');
 
-    private function registerCron()
-    {
-        if ($this->app->runningInConsole()) {
-//            $schedule = $this->app->make(Schedule::class);
-//            $schedule->call(function (){
-//                if (env("RUN_UPDATE_HOTEL_OBO", false)){
-//                    $stat_key = static::class.':update-hotel-content';
-//                    $lock = Cache::lock($stat_key, 70);
-//                    if ($lock->get()) {
-//                        Artisan::call('packages:update-all-hotel --one 1');
-//                        $lock->forceRelease();
-//                    }
-//                }
-//            })->everyMinute();
-        }
+        $this->publishes([$sourcePath => $viewPath], ['views', $this->moduleNameLower.'-module-views']);
+
+        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
+
+        $componentNamespace = str_replace('/', '\\', config('modules.namespace').'\\'.$this->moduleName.'\\'.config('modules.paths.generator.component-class.path'));
+        Blade::componentNamespace($componentNamespace, $this->moduleNameLower);
     }
 
     /**
      * Get the services provided by the provider.
-     *
-     * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [];
     }
@@ -121,11 +103,12 @@ class NotificationsServiceProvider extends BaseServiceProvider
     private function getPublishableViewPaths(): array
     {
         $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/modules/' . $this->moduleNameLower;
+        foreach (config('view.paths') as $path) {
+            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
+                $paths[] = $path.'/modules/'.$this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 }

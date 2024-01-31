@@ -284,11 +284,11 @@ $router->group('api', function ($router) use ($appSession) {
         $router->get('/job-soft-column', 'JobController@job_soft_column');
         $router->get('/job-soft-by', 'JobController@job_soft_by');
 
-        //$router->get('/job-hiring-team', 'JobController@get_job_hiring_team');//QUAN NO
-        //$router->post('/job-hiring-team', 'JobController@create_job_hiring_team');//QUAN NO
-        //$router->post('/job-hiring-team/:uuid', 'JobController@update_job_hiring_team');//QUAN NO
-        //$router->get('/job-hiring-team/:uuid', 'JobController@get_job_hiring_team_by_id');//QUAN NO
-        //$router->delete('/job-hiring-team/:uuid', 'JobController@delete_job_hiring_team');//QUAN NO
+        //$router->get('/job-hiring-team', 'JobController@get_job_hiring_team');//QUAN DONE
+        //$router->post('/job-hiring-team', 'JobController@create_job_hiring_team');//QUAN DONE
+        //$router->post('/job-hiring-team/:uuid', 'JobController@update_job_hiring_team');//QUAN DONE
+        //$router->get('/job-hiring-team/:uuid', 'JobController@get_job_hiring_team_by_id');//QUAN DONE
+        //$router->delete('/job-hiring-team/:uuid', 'JobController@delete_job_hiring_team');//QUAN DONE
     }, ['before' => 'AuthMiddlewares']);
 
     //$router->group('vendors', function ($router) {
@@ -368,17 +368,17 @@ $router->group('api', function ($router) use ($appSession) {
 
     $router->group('career-sites', function ($router) {
 
-        //$router->get('/career-site', 'CareerSiteController@get_career_site');//QUAN NO
-        //$router->post('/career-site', 'CareerSiteController@create_career_site');//QUAN NO
-        //$router->post('/career-site/:uuid', 'CareerSiteController@update_career_site');//QUAN NO
-        //$router->get('/career-site/:uuid', 'CareerSiteController@get_career_site_by_id');//QUAN NO
-        //$router->delete('/career-site/:uuid', 'CareerSiteController@delete_career_site');//QUAN NO
+        //$router->get('/career-site', 'CareerSiteController@get_career_site');//QUAN DONE
+        //$router->post('/career-site', 'CareerSiteController@create_career_site');//QUAN DONE
+        //$router->post('/career-site/:uuid', 'CareerSiteController@update_career_site');//QUAN DONE
+        //$router->get('/career-site/:uuid', 'CareerSiteController@get_career_site_by_id');//QUAN DONE
+        //$router->delete('/career-site/:uuid', 'CareerSiteController@delete_career_site');//QUAN DONE
 
-        //$router->get('/social', 'CareerSiteController@get_social');//QUAN NO
-        //$router->post('/social', 'CareerSiteController@create_social');//QUAN NO
-        //$router->post('/social/:uuid', 'CareerSiteController@update_social');//QUAN NO
-        //$router->get('/social/:uuid', 'CareerSiteController@get_social_by_id');//QUAN NO
-        //$router->delete('/social/:uuid', 'CareerSiteController@delete_social');//QUAN NO
+        //$router->get('/social', 'CareerSiteController@get_social');//QUAN DONE
+        //$router->post('/social', 'CareerSiteController@create_social');//QUAN DONE
+        //$router->post('/social/:uuid', 'CareerSiteController@update_social');//QUAN DONE
+        //$router->get('/social/:uuid', 'CareerSiteController@get_social_by_id');//QUAN DONE
+        //$router->delete('/social/:uuid', 'CareerSiteController@delete_social');//QUAN DONE
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('reports', function ($router) {
@@ -399,10 +399,10 @@ $router->group('api', function ($router) use ($appSession) {
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('notifications', function ($router) {
-        //$router->get('/notification', 'NotificationController@get_notification_list');//QUAN NO
-        //$router->get('/notification/:uuid', 'NotificationController@get_notification_detail');//QUAN NO
-        //$router->get('/notification-seen/:uuid', 'NotificationController@post_notification_seen');//QUAN NO
-        //$router->post('/notification-test', 'NotificationController@post_notification_test');//QUAN NO
+        //$router->get('/notification', 'NotificationController@get_notification_list');//QUAN DONE
+        //$router->get('/notification/:uuid', 'NotificationController@get_notification_detail');//QUAN DONE
+        //$router->get('/notification-seen/:uuid', 'NotificationController@post_notification_seen');//QUAN DONE
+        //$router->post('/notification-test', 'NotificationController@post_notification_test');//QUAN KHONG CO
     }, ['before' => 'AuthMiddlewares']);
 });
 $router->run();

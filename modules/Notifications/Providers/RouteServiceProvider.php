@@ -13,26 +13,24 @@ class RouteServiceProvider extends BaseServiceProvider
     protected string $moduleNamespace = 'Digisource\Notifications\Http\Controllers';
     protected $moduleNameLower = 'notifications';
 
-     /**
+    /**
      * Called before routes are registered.
      *
      * Register any model bindings or pattern based filters.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->map();
     }
 
     /**
      * Define the routes for the application.
-     *
-     * @return void
      */
-    public function map()
+    public function map(): void
     {
         $this->mapApiRoutes();
+
+        // $this->mapWebRoutes();
     }
 
 
@@ -40,10 +38,8 @@ class RouteServiceProvider extends BaseServiceProvider
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
-     *
-     * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(): void
     {
         Route::group(
             $this->getGroupPrefix(),
