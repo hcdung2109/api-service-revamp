@@ -187,10 +187,10 @@ $router->group('api', function ($router) use ($appSession) {
         //$router->get('/company/:uuid', 'CompanyController@get_company_by_id');
         //$router->delete('/company/:uuid', 'CompanyController@delete_company');
 
-        $router->get('/citys', 'SettingsLocationsController@get_expect_location');
-        $router->get('/districts/:id', 'SettingsLocationsController@get_districts');
-        $router->get('/wards/:id', 'SettingsLocationsController@get_wards');
-        $router->get('/company-sources', 'SettingsCandidateController@get_candidate_sources');
+        //$router->get('/citys', 'SettingsLocationsController@get_expect_location');//QUAN
+        //$router->get('/districts/:id', 'SettingsLocationsController@get_districts');//QUAN
+        //$router->get('/wards/:id', 'SettingsLocationsController@get_wards');//QUAN
+        //$router->get('/company-sources', 'SettingsCandidateController@get_candidate_sources');QUAN
 
         //$router->get('/invoice', 'CompanyController@get_invoices');
         //$router->post('/invoice', 'CompanyController@create_invoices');
@@ -284,11 +284,11 @@ $router->group('api', function ($router) use ($appSession) {
         $router->get('/job-soft-column', 'JobController@job_soft_column');
         $router->get('/job-soft-by', 'JobController@job_soft_by');
 
-        $router->get('/job-hiring-team', 'JobController@get_job_hiring_team');
-        $router->post('/job-hiring-team', 'JobController@create_job_hiring_team');
-        $router->post('/job-hiring-team/:uuid', 'JobController@update_job_hiring_team');
-        $router->get('/job-hiring-team/:uuid', 'JobController@get_job_hiring_team_by_id');
-        $router->delete('/job-hiring-team/:uuid', 'JobController@delete_job_hiring_team');
+        //$router->get('/job-hiring-team', 'JobController@get_job_hiring_team');//QUAN NO
+        //$router->post('/job-hiring-team', 'JobController@create_job_hiring_team');//QUAN NO
+        //$router->post('/job-hiring-team/:uuid', 'JobController@update_job_hiring_team');//QUAN NO
+        //$router->get('/job-hiring-team/:uuid', 'JobController@get_job_hiring_team_by_id');//QUAN NO
+        //$router->delete('/job-hiring-team/:uuid', 'JobController@delete_job_hiring_team');//QUAN NO
     }, ['before' => 'AuthMiddlewares']);
 
     //$router->group('vendors', function ($router) {
@@ -362,23 +362,23 @@ $router->group('api', function ($router) use ($appSession) {
         $router->get('/candidate-in-job', 'DashboardController@get_candidate_in_job');
     }, ['before' => 'AuthMiddlewares']);
 
-    $router->group('calendars', function ($router) {
-        $router->get('/calendar', 'CalendarController@get_calendar');
-    }, ['before' => 'AuthMiddlewares']);
+    //$router->group('calendars', function ($router) {
+        //$router->get('/calendar', 'CalendarController@get_calendar');
+    //}, ['before' => 'AuthMiddlewares']);
 
     $router->group('career-sites', function ($router) {
 
-        $router->get('/career-site', 'CareerSiteController@get_career_site');
-        $router->post('/career-site', 'CareerSiteController@create_career_site');
-        $router->post('/career-site/:uuid', 'CareerSiteController@update_career_site');
-        $router->get('/career-site/:uuid', 'CareerSiteController@get_career_site_by_id');
-        $router->delete('/career-site/:uuid', 'CareerSiteController@delete_career_site');
+        //$router->get('/career-site', 'CareerSiteController@get_career_site');//QUAN NO
+        //$router->post('/career-site', 'CareerSiteController@create_career_site');//QUAN NO
+        //$router->post('/career-site/:uuid', 'CareerSiteController@update_career_site');//QUAN NO
+        //$router->get('/career-site/:uuid', 'CareerSiteController@get_career_site_by_id');//QUAN NO
+        //$router->delete('/career-site/:uuid', 'CareerSiteController@delete_career_site');//QUAN NO
 
-        $router->get('/social', 'CareerSiteController@get_social');
-        $router->post('/social', 'CareerSiteController@create_social');
-        $router->post('/social/:uuid', 'CareerSiteController@update_social');
-        $router->get('/social/:uuid', 'CareerSiteController@get_social_by_id');
-        $router->delete('/social/:uuid', 'CareerSiteController@delete_social');
+        //$router->get('/social', 'CareerSiteController@get_social');//QUAN NO
+        //$router->post('/social', 'CareerSiteController@create_social');//QUAN NO
+        //$router->post('/social/:uuid', 'CareerSiteController@update_social');//QUAN NO
+        //$router->get('/social/:uuid', 'CareerSiteController@get_social_by_id');//QUAN NO
+        //$router->delete('/social/:uuid', 'CareerSiteController@delete_social');//QUAN NO
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('reports', function ($router) {
@@ -399,10 +399,10 @@ $router->group('api', function ($router) use ($appSession) {
     }, ['before' => 'AuthMiddlewares']);
 
     $router->group('notifications', function ($router) {
-        $router->get('/notification', 'NotificationController@get_notification_list');
-        $router->get('/notification/:uuid', 'NotificationController@get_notification_detail');
-        $router->get('/notification-seen/:uuid', 'NotificationController@post_notification_seen');
-        $router->post('/notification-test', 'NotificationController@post_notification_test');
+        //$router->get('/notification', 'NotificationController@get_notification_list');//QUAN NO
+        //$router->get('/notification/:uuid', 'NotificationController@get_notification_detail');//QUAN NO
+        //$router->get('/notification-seen/:uuid', 'NotificationController@post_notification_seen');//QUAN NO
+        //$router->post('/notification-test', 'NotificationController@post_notification_test');//QUAN NO
     }, ['before' => 'AuthMiddlewares']);
 });
 $router->run();
